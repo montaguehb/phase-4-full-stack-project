@@ -1,13 +1,20 @@
 import random
-
+import tempfile
 from faker import Faker
+
 from faker_file.providers.jpeg_file import JpegFileProvider as fakeJPEG
+from faker_file.storages.filesystem import FileSystemStorage as sysStore
 from app import app
 from models import db, Artist, Tour, Venue, Concert, User, UserConcert
 
+FS_STORAGE = sysStore(
+    root_path=tempfile.gettempdir(),
+    rel_path="tmp",
+)
+
+
 fake = Faker()
 fake.add_provider(fakeJPEG)
-
 
 def make_artists():
     Artist.query.delete()
@@ -25,10 +32,13 @@ def make_tours():
         db.session.add(Tour(
             name=fake.text(max_nb_chars=20),
             artist_id=random.randint(0, len(Artist.query.all()) - 1),
-            img=fake.jpeg_file()
+            img=fakeJPEG(fake).jpeg_file(storage=FS_STORAGE)
+            
         )
+        
     )
     db.session.commit() 
+FS_STORAGE.exists(Tour.img)
 
 def make_venues():
     Venue.query.delete()
@@ -72,6 +82,8 @@ def make_user_concerts():
             user_id=random.randint(0, len(User.query.all()) - 1)))
 
     db.session.commit()
+
+
 
 if __name__ == '__main__':
     with app.app_context():
