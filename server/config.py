@@ -16,7 +16,7 @@ metadata = MetaData(naming_convention={
 })
 
 db = SQLAlchemy(metadata=metadata)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db,render_as_batch=True)
 db.init_app(app)
 
 render_as_batch=True
