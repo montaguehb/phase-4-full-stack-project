@@ -18,3 +18,5 @@ class Concert(db.Model, SerializerMixin):
     date = db.Column(db.DateTime)
     venue_id = db.Column(db.Integer, db.ForeignKey("venues.id"))
     tour = db.Column(db.Integer, db.ForeignKey("tours.id"))
+    
+    

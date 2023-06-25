@@ -43,7 +43,7 @@ class Venues(Resource):
 
 class VenuesByID(Resource):
     def get(self,id):
-        return make_response(db.session.get(Venue,id),200)
+        return make_response(db.session.get(Venue.id),200)
 
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
