@@ -19,6 +19,8 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
 
+render_as_batch=True
+
 bcrypt = Bcrypt(app)
 
 api = Api(app)
