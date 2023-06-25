@@ -26,13 +26,17 @@ from models import Concert, Venue, Artist, User, Tour
 # # Instantiate CORS
 # CORS(app)
 
+#? I feel like there is a way we can reduce the amount of code for the BY ID as well as most of the ~show it in a list ones~ (?) --> seems like a matteo approved(/best practice) refactor
 class Artists(Resource):
     def get(self):
         return make_response([artist.to_dict() for artist in Artist.query.all()], 200)
 
 class ArtistsById(Resource):
     def get(self):
-        return make_response(db.session.get(Artist, id), 200)
+        if artist := db.session.get(Artist,id):
+            return make_response(artist.to_dict(),200)
+        else:
+            return make_response({'error':'404 Artist Not Found'})
 
 class Concerts(Resource):
     def get(self):
@@ -40,7 +44,10 @@ class Concerts(Resource):
 
 class ConcertById(Resource):
     def get(self, id):
-        return make_response(db.session.get(Concert, id).to_dict(), 200)
+        if concert := db.session.get(Concert, id):
+            return make_response(concert.to_dict(),200)
+        else:
+            return make_response({'error':'404 Concert Not Found'})
     
 class Venues(Resource):
     def get(self):
