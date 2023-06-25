@@ -14,9 +14,9 @@ function App() {
       <Switch>
         
       </Switch>
-      <>
-      <></>
-      </>
+      <Switch>
+      <Footer/>
+      </Switch>
     </div>
   );
 }
