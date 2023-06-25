@@ -6,7 +6,7 @@ from flask_restful import Api, Resource
 
 from config import app, db, api
 # Local imports
-from models import Concert, Venue, Artist, User
+from models import Concert, Venue, Artist, User, Tour
 
 
 # # Instantiate app, set attributes
@@ -19,10 +19,6 @@ from models import Concert, Venue, Artist, User
 
 # migrate = Migrate(app, db)
 # db.init_app(app)
-
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
 
 # # Instantiate REST API
 # api = Api(app)
@@ -52,7 +48,10 @@ class Venues(Resource):
 
 class VenuesByID(Resource):
     def get(self,id):
-        return make_response(db.session.get(Venue, id),200)
+        if venue := make_response(db.session.get(Venue, id),200):
+            return make_response(venue.to_dict(),200)
+        else:
+            return make_response({'error':'404 Venue Not Found'})
 
 class Login(Resource):
     def post(self):
@@ -73,9 +72,21 @@ class Signup(Resource):
             return make_response(new_user.to_dict(), 201)
         except Exception as e:
             make_response({"error": e}, 400)
-                        
+
+class Tours(Resource):
+    def get(self):
+        return make_response([tour.to_dict() for tour in Tour.query.all()])
+class TourByID(Resource):
+    def get(self,id):
+        if tour := db.session.get(Tour, id):
+            return make_response(tour.to_dict(),200)
+        else:
+            return make_response({'error':'404 Tour Not Found'},404)
+
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
+api.add_resource(Tours, '/tours')
+api.add_resource(TourByID,'tours/<int:id>')
 api.add_resource(Venues, "/venues")
 api.add_resource(VenuesByID, "/venues/<int:id>")
 api.add_resource(Artists, "/artists")
