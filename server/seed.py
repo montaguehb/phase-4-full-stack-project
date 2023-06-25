@@ -1,11 +1,13 @@
 import random
 
 from faker import Faker
-
+from faker_file.providers.jpeg_file import JpegFileProvider as fakeJPEG
 from app import app
 from models import db, Artist, Tour, Venue, Concert, User, UserConcert
 
 fake = Faker()
+fake.add_provider(fakeJPEG)
+
 
 def make_artists():
     Artist.query.delete()
@@ -23,7 +25,7 @@ def make_tours():
         db.session.add(Tour(
             name=fake.text(max_nb_chars=20),
             artist_id=random.randint(0, len(Artist.query.all()) - 1),
-            img=fake.image.urlLoremFlickr({ 'music' })
+            img=fake.jpeg_file()
         )
     )
     db.session.commit() 
