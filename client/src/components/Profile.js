@@ -17,6 +17,10 @@ const Profile = ({ sortBy, search, user}) => {
   //   })();
   // }, []);
 
+  const user_concerts = [user.user_concerts]
+  // const mapped_concerts = user_concerts.map(concert => concert.concert)
+  console.log(user)
+  console.log(user_concerts)
 
   const deleteUser = async () => {
     const resp = await fetch("/profile", {method: "DELETE"})
@@ -27,21 +31,19 @@ const Profile = ({ sortBy, search, user}) => {
 
   return (
     <div>
-      <Container centered>
-        <h2>Welcome: {user.first_name} to your Concert Page!</h2>
-        <Button primary onClick={() => setEdit(!edit)}>edit</Button>
+      <Container >
+        <h2 style={{alignItems : 'center',}}>Welcome: {user.first_name} to your Concert Page!</h2><Button primary onClick={() => setEdit(!edit)}>edit</Button>
         {edit?<div><SignUp method={"PATCH"}/><p>Current Username:{user.username}</p>
         <p>Current email:{user.email} </p></div>:<></>}
 
       <i class="trash alternate outline icon" onClick={deleteUser}></i>
       </Container>
-        <ConcertList
-            concerts={user.user_concerts.map((concert) => concert.concert)}
+        {user_concerts.length >= 1 ? (<ConcertList
+            concerts={user_concerts}
             sortBy={sortBy}
             search={search}
-          />
+          />):(<h1>You Don't Have Any Tickets Yet!</h1>)}
 
-      
     </div>
   );
 };

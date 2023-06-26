@@ -15,7 +15,7 @@ function App() {
   const [sortBy, setSortBy] = useState("name");
   const [concerts, setConcerts] = useState([]);
   const [login, setLogin] = useState(false);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState('')
 
   useEffect(() => {
     (async () => {
@@ -44,6 +44,7 @@ function App() {
 
   const updateUser =(user)=>{
     setUser(user)
+    console.log(user)
   }
   
   return (
