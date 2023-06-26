@@ -3,7 +3,7 @@ import ConcertList from "./ConcertList";
 import SignUp from "./SignUp";
 import { Button, Container } from "semantic-ui-react";
 const Profile = ({ sortBy, search, user }) => {
-  // const [profile, setProfile] = useState("");
+  // // const [profile, setProfile] = useState("");
   const [edit, setEdit] = useState(false)
   
 

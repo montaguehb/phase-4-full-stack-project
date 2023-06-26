@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
-import { Image, Container, Header, Button } from "semantic-ui-react";
+import { Image, Container, Header, Button, Grid } from "semantic-ui-react";
 
 function ConcertPage({user,login}) {
   const [concert, setConcerts] = useState();
@@ -27,24 +27,43 @@ function ConcertPage({user,login}) {
   }
 
   return (
-    <Container className="middle aligned">
-      <Header as="h2">{concert?.name}</Header>
-      <Image
-        src={"https://picsum.photos/500"}
-        alt={concert?.tour?.name}
-        size="large"
-        centered
-        bordered
-      />
-      {/* todo add descriptions for concerts */}
+    <Grid centered>
+      <Grid.Row>
+        <Header as="h2">{concert?.name}</Header>
 
-      <Container className='middle aligned'>
-      <p>Venue: {concert?.venue?.name}</p>
-      <p>Artist: {concert?.tour?.artist?.name}</p>
-      <Button secondary>Get ticket</Button>
-      <p>Available Tickets: {concert?.venue?.capacity}</p>
-      </Container>
-    </Container>
+      </Grid.Row>
+
+      <Grid.Row>
+        <Image
+          src={"https://picsum.photos/500"}
+          alt={concert?.tour?.name}
+          size="large"
+          centered
+          bordered
+        />
+      </Grid.Row>
+
+      <Grid.Row>
+        <p>Venue: {concert?.venue?.name}</p>
+      </Grid.Row>
+
+      <Grid.Row>
+        <p>Artist: {concert?.tour?.artist?.name}</p>
+      </Grid.Row>
+
+      <Grid.Row>
+        <p>Artist Description: {concert?.tour?.artist?.description}</p>
+      </Grid.Row>
+
+      <Grid.Row>
+        <Button secondary>Get ticket</Button>
+      </Grid.Row>
+
+      <Grid.Row>
+        <p>Available Tickets: {concert?.venue?.capacity}</p>
+      </Grid.Row>
+
+    </Grid>
   );
 }
 
