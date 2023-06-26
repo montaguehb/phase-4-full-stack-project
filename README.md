@@ -40,12 +40,14 @@ The first step to installing and using our application is to fork and clone the 
 * Full CRUD on user profiles
 * Each card is populated with information seeded from the database and is able to direct users to various routes.
 * Functional search bar with drop down allows users to find concerts based on different parameters
+* form validation and errors with Yup
 
 ### 🎼**Back End**🎼
 
 * config.py file used to configure database
 * hashing done for user passwords
-* full CRUD on users. 
+* full CRUD on users
+* form validation and errors with formik
 
 ---
 
