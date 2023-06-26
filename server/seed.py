@@ -12,7 +12,7 @@ def make_artists():
 
     for _ in range(20):
         db.session.add(Artist(
-            name=fake.name()
+            name=fake.first_name()
         ))
     db.session.commit()        
 

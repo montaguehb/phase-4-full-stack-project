@@ -14,10 +14,10 @@ class Artists(Resource):
 
 class ArtistsById(Resource):
     def get(self):
-        if artist := db.session.get(Artist,id):
-            return make_response(artist.to_dict(),200)
+        if artist := db.session.get(Artist, id):
+            return make_response(artist.to_dict(), 200)
         else:
-            return make_response({'error':'404 Artist Not Found'})
+            return make_response({'error':'Artist Not Found'}, 404)
 
 class Concerts(Resource):
     def get(self):
@@ -28,7 +28,7 @@ class ConcertById(Resource):
         if concert := db.session.get(Concert, id):
             return make_response(concert.to_dict(),200)
         else:
-            return make_response({'error':'404 Concert Not Found'})
+            return make_response({'error':'Concert Not Found'}, 404)
     
 class Venues(Resource):
     def get(self):
@@ -39,7 +39,7 @@ class VenuesByID(Resource):
         if venue := make_response(db.session.get(Venue, id),200):
             return make_response(venue.to_dict(),200)
         else:
-            return make_response({'error':'404 Venue Not Found'})
+            return make_response({'error':'Venue Not Found'}, 404)
 
 class Login(Resource):
     def post(self):
@@ -70,7 +70,7 @@ class TourByID(Resource):
         if tour := db.session.get(Tour, id):
             return make_response(tour.to_dict(),200)
         else:
-            return make_response({'error':'404 Tour Not Found'},404)
+            return make_response({'error':'Tour Not Found'},404)
 
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
