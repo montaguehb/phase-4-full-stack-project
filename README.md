@@ -1,4 +1,4 @@
-# 🎫**FlatTicket**(we can totally change this name)🎫
+# 🎫**FlatTicket**🎫
 
 <sub>🎹A project By: Historia Montague, Jay Lim, and Nolan Nash🎹</sub>
 

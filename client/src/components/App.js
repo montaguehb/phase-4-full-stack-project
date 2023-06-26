@@ -54,6 +54,7 @@ function App() {
         handleSearchChange={handleSearchChange}
         handleSortBy={handleSortBy}
         login={login}
+        user={user}
       />
       <Switch>
         <Route exact path="/">
