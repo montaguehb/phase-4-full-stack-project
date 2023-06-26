@@ -39,20 +39,21 @@ class Venue(db.Model, SerializerMixin):
         return f'<Venue: {self.id} \n Venue Name: {self.name}>'
 
 
-class Tours(db.Model, SerializerMixin):
+class Tour(db.Model, SerializerMixin):
     
     __tablename__ = "tours"
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"))
+    
+    artist = db.relationship("Artist", back_populates="tours")
 
 class Artist(db.Model, SerializerMixin):
     __tablename__='artists'
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    tours = db.Column(db.Integer, nullable=False)
     
     tours = db.relationship("Tour", back_populates="artist")
     
