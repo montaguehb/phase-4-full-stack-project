@@ -1,33 +1,34 @@
 
-from flask import Flask, make_response
-from flask_cors import CORS
-from flask_migrate import Migrate
+from flask import Flask, make_response, request, session
+# from flask_cors import CORS
+# from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
+from config import app, db, api
 # Local imports
 from models import db, Concert, Venue, Artist
 
 
-# Instantiate app, set attributes
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+# # Instantiate app, set attributes
+# app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.json.compact = False
 
-# Define metadata, instantiate db
+# # Define metadata, instantiate db
 
-migrate = Migrate(app, db)
-db.init_app(app)
+# migrate = Migrate(app, db)
+# db.init_app(app)
 
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 
-# Instantiate REST API
-api = Api(app)
+# # Instantiate REST API
+# api = Api(app)
 
-# Instantiate CORS
-CORS(app)
+# # Instantiate CORS
+# CORS(app)
 
 class Artists(Resource):
     def get(self):
