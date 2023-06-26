@@ -17,9 +17,12 @@ class Concert(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime)
     venue_id = db.Column(db.Integer, db.ForeignKey("venues.id"))
-    tour = db.Column(db.Integer, db.ForeignKey("tours.id"))
+    tour_id = db.Column(db.Integer, db.ForeignKey("tours.id"))
 
-
+    venue = db.relationship("Venue", back_populates="concerts")
+    
+    serialize_rules = ("-venue",)
+    
 class Venue(db.Model, SerializerMixin):
     __tablename__ = 'venues'
     
@@ -35,6 +38,15 @@ class Venue(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<Venue: {self.id} \n Venue Name: {self.name}>'
 
+
+class Tours(db.Model, SerializerMixin):
+    
+    __tablename__ = "tours"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"))
+
 class Artist(db.Model, SerializerMixin):
     __tablename__='artists'
     
@@ -48,5 +60,4 @@ class Artist(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f'<Artist {self.name}>'
-    
-    
+

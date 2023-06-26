@@ -3,9 +3,6 @@ from flask import Flask, make_response
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
-
 
 # Local imports
 from models import db, Concert, Venue
@@ -47,12 +44,13 @@ class Venues(Resource):
 
 class VenuesByID(Resource):
     def get(self,id):
-        return make_response(db.session.get(Venue.id),200)
+        return make_response(db.session.get(Venue, id),200)
 
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
 api.add_resource(Venues, "/venues")
 api.add_resource(VenuesByID, "/venues/<int:id>")
+
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
 
