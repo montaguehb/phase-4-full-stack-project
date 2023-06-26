@@ -28,7 +28,7 @@ const Profile = ({ sortBy, search, user}) => {
   return (
     <div>
       <Container centered>
-        <h2>Welcome: {user.name} to your Concert Page!</h2>
+        <h2>Welcome: {user.first_name} to your Concert Page!</h2>
         <Button primary onClick={() => setEdit(!edit)}>edit</Button>
         {edit?<div><SignUp method={"PATCH"}/><p>Current Username:{user.username}</p>
         <p>Current email:{user.email} </p></div>:<></>}
