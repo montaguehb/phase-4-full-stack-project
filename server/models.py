@@ -59,21 +59,21 @@ class Venue(db.Model, SerializerMixin):
     @validates('name')
     def validate_name(self,key,name):
     #? should think about implementing regex or not
-        if not name or 2< len(name) <= 20:
+        if not name:
             raise ValueError('Venue needs a name, 2-20 characters in length')
         return name
     
     @validates('capacity')
     def validate_capacity(self,key,capacity):
-        if type(capacity) is not int or 10<= capacity <= 150000:
+        if type(capacity) is not int or not 10<= capacity <= 150000:
             raise ValueError('Capacity must be an integer between 10 and 150,000')
         return capacity
     
     @validates('location')
     def validate_location(self,key,location):
         #? not sure how we want to format our location... as an address or what, for now assuming is a city string
-        if not location or 1<= len(location) < 25:
-            raise ValueError('Location is required and must be of length of 1-25 characters')
+        if not location:
+            raise ValueError('Location is required')
         return location
 
     #other methods
@@ -99,21 +99,21 @@ class User(db.Model, SerializerMixin):
     #validations
     @validates('first_name')
     def validate_first_name(self,key,first_name):
-        if not first_name or 2< len(first_name) <= 20:
+        if not first_name or not 2< len(first_name) <= 20:
             raise ValueError('User needs a first name, 2-20 characters in length')
         return first_name
     
     @validates ('username')
     def validate_username(self,key,username):
-        if not username or 2< len(username) <= 20:
+        if not username or not 2< len(username) <= 20:
             raise ValueError('User needs a username, 2-20 characters in length')
         return username
     
     @validates('email')
     def validate_email(self,key,email):
     #? this one is going to need more work than others...
-        if not email or 2< len(email) <= 20:
-            raise ValueError('Venue needs a name, 2-20 characters in length')
+        if not email:
+            raise ValueError('Email is required')
         return email
 
     #other methods
@@ -155,7 +155,7 @@ class Tour(db.Model, SerializerMixin):
     @validates('name')
     def validate_name(self,key,name):
     #? should think about implementing regex or not
-        if not name or 2< len(name) <= 20:
+        if not name or not 2< len(name) <= 20:
             raise ValueError('Tour needs a name, 2-20 characters in length')
         return name
 
@@ -178,7 +178,7 @@ class Artist(db.Model, SerializerMixin):
     #validations
     @validates('name')
     def validate_name(self,key,name):
-        if not name or 2< len(name) <= 20:
+        if not name or not 2 < len(name) <= 20:
             raise ValueError('Artist needs a name, 2-20 characters in length')
         return name
     
