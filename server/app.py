@@ -1,30 +1,11 @@
 
 from flask import Flask, make_response, request, session
-# from flask_cors import CORS
-# from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
 from config import app, db, api
 # Local imports
 from models import Concert, Venue, Artist, User, Tour
 
-
-# # Instantiate app, set attributes
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.json.compact = False
-
-# # Define metadata, instantiate db
-
-# migrate = Migrate(app, db)
-# db.init_app(app)
-
-# # Instantiate REST API
-# api = Api(app)
-
-# # Instantiate CORS
-# CORS(app)
 
 #? I feel like there is a way we can reduce the amount of code for the BY ID as well as most of the ~show it in a list ones~ (?) --> seems like a matteo approved(/best practice) refactor
 class Artists(Resource):
@@ -83,6 +64,7 @@ class Signup(Resource):
 class Tours(Resource):
     def get(self):
         return make_response([tour.to_dict() for tour in Tour.query.all()])
+    
 class TourByID(Resource):
     def get(self,id):
         if tour := db.session.get(Tour, id):
