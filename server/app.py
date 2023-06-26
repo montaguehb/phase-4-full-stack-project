@@ -41,8 +41,18 @@ class ConcertById(Resource):
     def get(self, id):
         return make_response(db.session.get(Concert, id).to_dict(), 200)
     
+class Venues(Resource):
+    def get(self):
+        return make_response([venue.to_dict() for venue in Venue.query.all()],200)
+
+class VenuesByID(Resource):
+    def get(self,id):
+        return make_response(db.session.get(Venue.id),200)
+
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
+api.add_resource(Venues, "/venues")
+api.add_resource(VenuesByID, "/venues/<int:id>")
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
 
