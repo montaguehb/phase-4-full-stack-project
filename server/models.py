@@ -26,6 +26,8 @@ class Venue(db.Model, SerializerMixin):
     capacity = db.Column(db.Integer, nullable=False)
     location = db.Column(db.VARCHAR, nullable=False)
 
+    concerts = db.relationship("Concert", back_populates="venue")
+    
     def __repr__(self):
         return f'<Venue: {self.id} \n Venue Name: {self.name}>'
 
@@ -60,24 +62,25 @@ class UserConcert(db.Model, SerializerMixin):
     __tablename__ = 'user_concerts'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey = ('users.id'))
-    concert_id = db.Column(db.Integer, ForeignKey = ('concerts.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    concert_id = db.Column(db.Integer, db.ForeignKey('concerts.id'))
 
 
-class Tours(db.Model, SerializerMixin):
+class Tour(db.Model, SerializerMixin):
     
     __tablename__ = "tours"
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"))
+    
+    artist = db.relationship("Artist", back_populates="tours")
 
 class Artist(db.Model, SerializerMixin):
     __tablename__='artists'
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    tours = db.Column(db.Integer, nullable=False)
     
     tours = db.relationship("Tour", back_populates="artist")
     
