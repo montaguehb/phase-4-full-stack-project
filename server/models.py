@@ -35,3 +35,18 @@ class Venue(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<Venue: {self.id} \n Venue Name: {self.name}>'
 
+class Artist(db.Model, SerializerMixin):
+    __tablename__='artists'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    tours = db.Column(db.Integer, nullable=False)
+    
+    tours = db.relationship("Tour", back_populates="artist")
+    
+    serialize_rules = ('-tours',)
+    
+    def __repr__(self):
+        return f'<Artist {self.name}>'
+    
+    
