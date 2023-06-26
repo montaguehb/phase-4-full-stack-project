@@ -8,7 +8,7 @@ from sqlalchemy import MetaData
 
 
 # Local imports
-from models import db, Concert
+from models import db, Concert, Venue
 
 
 # Instantiate app, set attributes
@@ -21,6 +21,10 @@ app.json.compact = False
 
 migrate = Migrate(app, db)
 db.init_app(app)
+
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
 
 # Instantiate REST API
 api = Api(app)
@@ -41,3 +45,4 @@ api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
+
