@@ -2,10 +2,12 @@ import React from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Field } from "formik-semantic-ui-react";
 import { Button, Grid } from "semantic-ui-react";
+import {Link, useHistory} from 'react-router-dom';
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
-const Login = ({login, updateLogin}) => {
+const Login = ({login, updateLogin,updateUser}) => {
+  const history = useHistory('/')
   const loginSchema = Yup.object().shape({
     username: Yup.string()
       .min(2, "Invalid username")
@@ -23,6 +25,9 @@ const Login = ({login, updateLogin}) => {
       body: JSON.stringify(values),
     });
     updateLogin(resp.ok)
+    updateUser(resp)
+    console.log(resp)
+    history.push('/')
   };
 
   return (
@@ -52,6 +57,12 @@ const Login = ({login, updateLogin}) => {
           </Grid>
         )}
       </Formik>
+      <div>
+        <p>Dont Have An Account?</p>
+        <Link to='/signup'>
+          <Button>Click Here To Sign Up</Button>
+        </Link>
+      </div>
     </div>
   );
 };

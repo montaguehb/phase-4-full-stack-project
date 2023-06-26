@@ -16,6 +16,15 @@ function ConcertPage() {
     })();
   }, [id]);
 
+  let tickets_remaining = concert?.venue?.capacity
+  const buy_ticket = () =>{
+    tickets_remaining -= 1
+  }
+
+  const add_to_user_concerts = () =>{
+
+  }
+
   return (
     <Container className="middle aligned">
       <Header as="h2">{concert?.name}</Header>
@@ -29,8 +38,8 @@ function ConcertPage() {
       {/* todo add descriptions for concerts */}
       <p>Venue: {concert?.venue?.name}</p>
       <p>Artist: {concert?.tour?.artist?.name}</p>
-      <Button secondary>Get ticket</Button>
-      <p>Insert remaining tickets here</p>
+      <Button secondary onClick={()=>buy_ticket}>Get ticket</Button>
+      <p>Remaining Tickets: {tickets_remaining}</p>
     </Container>
   );
 }
