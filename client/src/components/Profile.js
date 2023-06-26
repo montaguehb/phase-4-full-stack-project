@@ -15,25 +15,21 @@ const Profile = ({ sortBy, search, user }) => {
   } 
   return (
     <div>
+      <Container centered>
+        <h2>Welcome: {user.name} to your Concert Page!</h2>
+        <Button primary onClick={() => setEdit(!edit)}>edit</Button>
+        {edit?<div><SignUp method={"PATCH"}/><p>Current Username:{user.username}</p>
+        <p>Current email:{user.email} </p></div>:<></>}
 
-      {user ? (
-        <Container centered>
-          <h2>Welcome: {user.name} to your Concert Page!</h2>
-          <ConcertList
+      <i class="trash alternate outline icon" onClick={deleteUser}></i>
+      </Container>
+        <ConcertList
             concerts={user.user_concerts.map((concert) => concert.concert)}
             sortBy={sortBy}
             search={search}
           />
-        </Container>
-        
-      ) : (
-        <div>loading...</div>
-      )}
-      <Button primary onClick={() => setEdit(!edit)}>edit</Button>
 
-      {edit?<SignUp method={"PATCH"}/>:<></>}
       
-      <i class="trash alternate outline icon" onClick={deleteUser}></i>
     </div>
   );
 };
