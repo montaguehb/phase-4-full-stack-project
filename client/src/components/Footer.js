@@ -6,10 +6,7 @@ const Footer = () =>{
     return(
         <div id='footer_div'>
             <Link to = '/'>
-                <Header class='ui left alligned icon header'>
-                    <i class='ticket alternate'></i>
-                    <div class='content'>FlatTicket</div>
-                </Header>
+                <Header as='h2' icon='ticket alternate' content='FlatTicket'/>
             </Link>
 
         </div>
