@@ -35,8 +35,8 @@ class Artists(Resource):
         return make_response([artist.to_dict() for artist in Artist.query.all()], 200)
 
 class ArtistsById(Resource):
-    def get(self):
-        return make_response(db.session.get(Artist, id), 200)
+    def get(self, id):
+        return make_response(db.session.get(Artist, id).to_dict(), 200)
 
 class Concerts(Resource):
     def get(self):
@@ -51,8 +51,8 @@ class Venues(Resource):
         return make_response([venue.to_dict() for venue in Venue.query.all()],200)
 
 class VenuesByID(Resource):
-    def get(self,id):
-        return make_response(db.session.get(Venue, id),200)
+    def get(self, id):
+        return make_response(db.session.get(Venue, id).to_dict(),200)
 
 class Login(Resource):
     def post(self):

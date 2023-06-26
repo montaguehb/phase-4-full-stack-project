@@ -1,15 +1,26 @@
 # Remote library imports
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
-from sqlalchemy import MetaData
 
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 from config import db, bcrypt
 
+class UserConcert(db.Model, SerializerMixin):
+    __tablename__ = 'user_concerts'
 
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    concert_id = db.Column(db.Integer, db.ForeignKey('concerts.id'))
+    
+    #relationships
+    user = db.relationship("User", back_populates="user_concerts")
+    concert = db.relationship("Concert", back_populates="user_concerts")
+    
+    #serializations
+    serialize_rules = ("-user.user_concerts", "-concert.user_concerts")
+    #validations
+    #other methods
 
 class Concert(db.Model, SerializerMixin):
     __tablename__ = 'concerts'
@@ -22,11 +33,11 @@ class Concert(db.Model, SerializerMixin):
     #relationships
     venue = db.relationship("Venue", back_populates="concerts")
     tour = db.relationship("Tour", back_populates="concerts")
-    
-    users = association_proxy("user_concerts", "users")
+    user_concerts = db.relationship("UserConcert", back_populates="concert")
+    users = association_proxy("user_concerts", "user")
 
     #serialization
-    serialize_rules = ("-venue",)
+    serialize_rules = ("-users", "-venue.concerts", "-tour.concerts", "user_concerts.concert")
     
     #validations
 
@@ -80,6 +91,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.VARCHAR, nullable=False)
     
     #relationships
+    user_concerts = db.relationship("UserConcert", back_populates="user")
     concerts = association_proxy("user_concerts", "concerts")
     
     #serializations
@@ -124,21 +136,6 @@ class User(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<user: {self.id} \nname: {self.name}>'
-
-class UserConcert(db.Model, SerializerMixin):
-    __tablename__ = 'user_concerts'
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    concert_id = db.Column(db.Integer, db.ForeignKey('concerts.id'))
-    
-    #relationships
-    user = db.relationship("User", back_populates="concerts")
-    concert = db.relationship("Concert", back_populates="users")
-    
-    #serializations
-    #validations
-    #other methods
 
 class Tour(db.Model, SerializerMixin):
     
