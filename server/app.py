@@ -22,6 +22,10 @@ app.json.compact = False
 migrate = Migrate(app, db)
 db.init_app(app)
 
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+
 # Instantiate REST API
 api = Api(app)
 
@@ -51,3 +55,4 @@ api.add_resource(Venues, "/venues")
 api.add_resource(VenuesByID, "/venues/<int:id>")
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
+
