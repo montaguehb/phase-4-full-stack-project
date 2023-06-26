@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {BrowserRouter as Router} from 'react-router-dom'
 import './index.css';
-import App from './App';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+// going to leave strict mode on for now...
   <React.StrictMode>
-    <App />
+{/* context goes here */}
+    <Router>
+      <App />
+    </Router>
+{/* context goes here */}
   </React.StrictMode>
 );
 
