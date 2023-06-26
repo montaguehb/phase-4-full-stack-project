@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { Image, Container, Header, Button } from "semantic-ui-react";
 
-function ConcertPage() {
+function ConcertPage({user,login}) {
   const [concert, setConcerts] = useState();
   const {id} = useParams()
+
   useEffect(() => {
     (async () => {
       const resp = await fetch(`/concerts/${id}`);

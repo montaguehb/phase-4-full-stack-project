@@ -73,7 +73,7 @@ function App() {
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/concerts/:id">
-          <ConcertPage />
+          <ConcertPage user={user} login={login}/>
         </Route>
       </Switch>
       <Footer />
