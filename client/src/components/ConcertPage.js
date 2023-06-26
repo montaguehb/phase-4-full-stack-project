@@ -38,10 +38,12 @@ function ConcertPage({user,login}) {
       />
       {/* todo add descriptions for concerts */}
 
+      <Container className='middle aligned'>
       <p>Venue: {concert?.venue?.name}</p>
       <p>Artist: {concert?.tour?.artist?.name}</p>
       <Button secondary>Get ticket</Button>
       <p>Available Tickets: {concert?.venue?.capacity}</p>
+      </Container>
     </Container>
   );
 }
