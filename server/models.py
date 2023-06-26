@@ -19,6 +19,10 @@ class Concert(db.Model, SerializerMixin):
     venue_id = db.Column(db.Integer, db.ForeignKey("venues.id"))
     tour = db.Column(db.Integer, db.ForeignKey("tours.id"))
 
+    venue = db.relationship("Venue", back_populates="concerts")
+    
+    serialize_rules = ("-venue",)
+    
 class Venue(db.Model, SerializerMixin):
     __tablename__ = 'venues'
     
