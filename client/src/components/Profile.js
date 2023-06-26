@@ -19,6 +19,7 @@ const Profile = ({ sortBy, search, user}) => {
 
   const user_concerts = [user.user_concerts]
   // const mapped_concerts = user_concerts.map(concert => concert.concert)
+  //once merged and user obj passed properly map user_concerts
   console.log(user)
   console.log(user_concerts)
 
