@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
 # Local imports
-from models import db, Concert, Venue
+from models import db, Concert, Venue, Artist
 
 
 # Instantiate app, set attributes
@@ -29,6 +29,13 @@ api = Api(app)
 # Instantiate CORS
 CORS(app)
 
+class Artists(Resource):
+    def get(self):
+        return make_response([artist.to_dict() for artist in Artist.query.all()], 200)
+
+class ArtistsById(Resource):
+    def get(self):
+        return make_response(db.session.get(Artist, id), 200)
 
 class Concerts(Resource):
     def get(self):
@@ -50,6 +57,8 @@ api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
 api.add_resource(Venues, "/venues")
 api.add_resource(VenuesByID, "/venues/<int:id>")
+api.add_resource(Artists, "/artists")
+api.add_resource(ArtistsById, "/artists/<int:id>")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
