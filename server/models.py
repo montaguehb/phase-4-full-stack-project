@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from sqlalchemy_serializer import SerializerMixin
 
 # Local imports
 
@@ -31,3 +32,18 @@ api = Api(app)
 # Instantiate CORS
 CORS(app)
 
+class Artist(db.Model, SerializerMixin):
+    __tablename__='artists'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    tours = db.Column(db.Integer, nullable=False)
+    
+    tours = db.relationship("Tour", back_populates="artist")
+    
+    serialize_rules = ('-tours',)
+    
+    def __repr__(self):
+        return f'<Artist {self.name}>'
+    
+    
