@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { Image, Container, Header, Button } from "semantic-ui-react";
 
-function ConcertPage() {
+function ConcertPage({user,login}) {
   const [concert, setConcerts] = useState();
   const {id} = useParams()
   useEffect(() => {
@@ -15,6 +15,16 @@ function ConcertPage() {
       }
     })();
   }, [id]);
+  
+  const handleClick = async (user,concert) =>{
+    const resp = await fetch('/profile',{
+      method: "POST",
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({'user_id': user.id,'concert_id':concert.id}),
+    })
+  }
 
   return (
     <Container className="middle aligned">
@@ -27,10 +37,11 @@ function ConcertPage() {
         bordered
       />
       {/* todo add descriptions for concerts */}
+
       <p>Venue: {concert?.venue?.name}</p>
       <p>Artist: {concert?.tour?.artist?.name}</p>
       <Button secondary>Get ticket</Button>
-      <p>Insert remaining tickets here</p>
+      <p>Available Tickets: {concert?.venue?.capacity}</p>
     </Container>
   );
 }
