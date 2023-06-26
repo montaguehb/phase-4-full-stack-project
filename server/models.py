@@ -2,9 +2,6 @@
 
 # Remote library imports
 from flask import Flask
-from flask_cors import CORS
-from flask_migrate import Migrate
-from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy_serializer import SerializerMixin
@@ -23,14 +20,14 @@ metadata = MetaData(naming_convention={
 })
 
 db = SQLAlchemy(metadata=metadata)
-migrate = Migrate(app, db)
-db.init_app(app)
 
-# Instantiate REST API
-api = Api(app)
+class Concert(db.Model):
+    __tablename__ = 'concerts'
 
-# Instantiate CORS
-CORS(app)
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime)
+    venue_id = db.Column(db.Integer, db.ForeignKey("venues.id"))
+    tour = db.Column(db.Integer, db.ForeignKey("tours.id"))
 
 class Venue(db.Model, SerializerMixin):
     __tablename__ = 'venues'

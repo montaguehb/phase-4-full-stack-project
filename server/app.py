@@ -5,24 +5,29 @@ from flask_restful import Api, Resource
 from flask_cors import CORS
 import os
 
-from models import db
+# Local imports
 
+# Instantiate app, set attributes
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
-CORS(app)
+# Define metadata, instantiate db
+metadata = MetaData(naming_convention={
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+})
+
+db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
-
 db.init_app(app)
-
-api = Api(app)
 
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 
-class VenByID(Resource):
-# assuming that you will not need/be able to look for a list of venues
-# venue will be li
+# Instantiate REST API
+api = Api(app)
+
+# Instantiate CORS
+CORS(app)
