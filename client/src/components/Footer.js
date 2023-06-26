@@ -3,12 +3,11 @@ import {Header} from 'semantic-ui-react';
 import {Link} from 'react-router-dom'
 
 const Footer = () =>{
-    return(
-        <div id='footer_div'>
-            <Link to = '/'>
+    return (
+        <div>
+            <Link to ='/'>
                 <Header as='h2' icon='ticket alternate' content='FlatTicket'/>
             </Link>
-
         </div>
     )
 }
