@@ -61,7 +61,19 @@ class Login(Resource):
             if user.authenticate(req.get("password")):
                 session["user_id"] = user.id
                 return make_response(user.to_dict(), 200)
-                
+        else:
+            return make_response({"error": "user not authorized"}, 403)
+
+class Signup(Resource):
+    def post(self):
+        try:
+            new_user = User(**request.get_json())
+            db.session.add(new_user)
+            db.session.commit()
+            return make_response(new_user.to_dict(), 201)
+        except Exception as e:
+            make_response({"error": e}, 400)
+                        
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
 api.add_resource(Venues, "/venues")
@@ -69,6 +81,7 @@ api.add_resource(VenuesByID, "/venues/<int:id>")
 api.add_resource(Artists, "/artists")
 api.add_resource(ArtistsById, "/artists/<int:id>")
 api.add_resource(Login, "/login")
+api.add_resource(Signup, "/signup")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
