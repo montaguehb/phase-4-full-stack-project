@@ -6,7 +6,7 @@ from sqlalchemy import MetaData
 
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-
+from sqlalchemy.ext.associationproxy import association_proxy
 from config import db, bcrypt
 
 
@@ -21,6 +21,9 @@ class Concert(db.Model, SerializerMixin):
 
     #relationships
     venue = db.relationship("Venue", back_populates="concerts")
+    tour = db.relationship("Tour", back_populates="concerts")
+    
+    users = association_proxy("user_concerts", "users")
 
     #serialization
     serialize_rules = ("-venue",)
@@ -75,9 +78,9 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.VARCHAR, nullable=False)
     password_hash = db.Column(db.String)
     email = db.Column(db.VARCHAR, nullable=False)
-
     
     #relationships
+    concerts = association_proxy("user_concerts", "concerts")
     
     #serializations
     
@@ -108,7 +111,7 @@ class User(db.Model, SerializerMixin):
     def password_hash(self):
         return self._password_hash
     
-    @password_hash.setter()
+    @password_hash.setter
     def password_hash(self, password):
         password_hash = bcrypt.generate_password_hash(
             password.encode('utf-8'))
@@ -128,7 +131,11 @@ class UserConcert(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     concert_id = db.Column(db.Integer, db.ForeignKey('concerts.id'))
+    
     #relationships
+    user = db.relationship("User", back_populates="concerts")
+    concert = db.relationship("Concert", back_populates="users")
+    
     #serializations
     #validations
     #other methods
@@ -143,8 +150,10 @@ class Tour(db.Model, SerializerMixin):
     
     #relationships
     artist = db.relationship("Artist", back_populates="tours")
+    concerts = db.relationship("Concert", back_populates="tour")
     
     #serializations
+    
     #validations
     @validates('name')
     def validate_name(self,key,name):
