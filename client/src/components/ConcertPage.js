@@ -21,9 +21,16 @@ function ConcertPage() {
     tickets_remaining -= 1
   }
 
-  const add_to_user_concerts = () =>{
-
-  }
+  // const add_to_user_concerts = (concert) =>{
+  //   const resp = await fetch('/profile',{
+  //     method:"POST",
+  //     headers: {
+  //       "content-type":
+  //       'application/json',
+  //     },
+  //     body:
+  //   })
+  // }
 
   return (
     <Container className="middle aligned">
@@ -38,7 +45,7 @@ function ConcertPage() {
       {/* todo add descriptions for concerts */}
       <p>Venue: {concert?.venue?.name}</p>
       <p>Artist: {concert?.tour?.artist?.name}</p>
-      <Button secondary onClick={()=>buy_ticket}>Get ticket</Button>
+      <Button secondary onClick={buy_ticket()}>Get ticket</Button>
       <p>Remaining Tickets: {tickets_remaining}</p>
     </Container>
   );

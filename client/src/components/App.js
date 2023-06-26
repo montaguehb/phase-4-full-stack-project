@@ -40,7 +40,7 @@ function App() {
   };
   
   const updateLogin = () => {
-    setLogin(true)
+    setLogin(val => !val)
   } 
 
   const updateUser =(user)=>{
@@ -61,7 +61,7 @@ function App() {
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/profile">
-          <Profile sortBy={sortBy} search={search} />
+          <Profile sortBy={sortBy} search={search} user={user}/>
         </Route>
         <Route path="/signup">
           <SignUp login={login} updateLogin={updateLogin}/>
