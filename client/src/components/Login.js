@@ -2,15 +2,15 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const loginSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, "Invalid username")
-    .max(50, "Invalid username")
-    .required("Required"),
-  password: Yup.string().required("Required"),
-});
-
 const Login = () => {
+  const loginSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(2, "Invalid username")
+      .max(50, "Invalid username")
+      .required("Required"),
+    password: Yup.string().required("Required"),
+  });
+
   const handleSubmit = async (values, { setSubmitting }) => {
     const resp = await fetch("/login", {
       method: "POST",

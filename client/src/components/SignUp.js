@@ -1,132 +1,64 @@
-import './SignUp.css'
-import React, {useEffect, useState} from "react"; // # remove if unecessary
+import React, { useEffect } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-// declare addSignUp in App.js
-const SignUp = ({ addSignUp }) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    name: "",
-    username: "",
-    password: "",
+
+const SignUp = () => {
+  const signUpSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(2, "Invalid username")
+      .max(50, "Invalid username"),
+    password: Yup.string().required("Required"),
+    email: Yup.string().email().required("Required"),
+    name: Yup.string().required("Required"),
   });
 
-  // add URL to fetch
-  const handleSubmit = e => {
-    e.preventDefault();
-    const newSignUp = { ...formData };
-    fetch(URL, {
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const resp = await fetch("/signup", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
-      body: JSON.stringify(newSignUp),
-    })
-    .then(resp => resp.json())
-    .then(creation => {
-      addSignUp(creation);
-      setFormData({
-        email: "",
-        name: "",
-        username: "",
-        password: "",
-      });
+      body: JSON.stringify(values),
     });
-  };
-
-  const handleChange = e => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    if (resp.ok) {
+      const data = await resp.json();
+      console.log(data);
+    } else {
+      alert("Unable to signup");
+    }
   };
 
   return (
-    <form className='formContainer' onSubmit={handleSubmit}>
-      <div>
-        <label>E-mail</label>
-        <input 
-          type='email' 
-          id='email' 
-          name='email'
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label>Name</label>
-        <input 
-          type='text' 
-          id='name' 
-          name='name'
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label>Username</label>
-        <input 
-          type='text' 
-          id='username' 
-          name='username'
-          value={formData.username}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label>Password</label>
-        <input 
-          type='text' 
-          id='password' 
-          name='password'
-          value={formData.password}
-          onChange={handleChange}
-        />
-      </div>
-
-    <button className="signupButton" type="submit">Sign Up</button>
-  </form>
+    <div>
+      <h1>Signup</h1>
+      <Formik
+        initialValues={{ name: "", email: "", username: "", password: "" }}
+        validationSchema={signUpSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <label>Name:</label>
+            <Field type="name" name="name" />
+            <ErrorMessage name="name" component="div" />
+            <label>Username:</label>
+            <Field type="username" name="username" />
+            <ErrorMessage name="username" component="div" />
+            <label>Email:</label>
+            <Field type="email" name="email" />
+            <ErrorMessage name="email" component="div" />
+            <label>Password:</label>
+            <Field type="password" name="password" />
+            <ErrorMessage name="password" component="div" />
+            <button type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 
-export default SignUp
-
-
-
-
-
-
-
-// scratch work
-/*
-const SignUp = ({ addSignup }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    age: "",
-  })
-}
-*/
-
-/*
-const handleSubmit = e => {
-  e.prevenDefault();
-  const newSignup = { ...formData };
-  fetch("http://localhost:5000/concerts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newSignup),
-  })
-    .then((resp) => resp.json())
-    .then((createdSignup) => {
-      addSignup(createdSignup);
-      setFormData({
-        name: "",
-        age: "",
-      })
-    })
-}
-*/
+export default SignUp;

@@ -6,20 +6,17 @@ import Nav from "./Nav";
 import Header from './Header.js'
 import {Route, Switch} from 'react-router-dom';
 import Login from './Login';
-import Signup from './Signup';
-
+import SignUp from './SignUp';
+import Clear from './Clear'
 
 function App() {
   return (
     <div>
       <Header/>
-      <Switch>
-        {/* <Signup></Signup> */}
-        <Login></Login>
-      </Switch>
-      <Switch>
+      <Login></Login>
+      <SignUp></SignUp>
       <Footer/>
-      </Switch>
+      <Clear></Clear>
     </div>
   );
 }
