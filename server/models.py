@@ -87,7 +87,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     username = db.Column(db.VARCHAR, nullable=False)
-    password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String)
     email = db.Column(db.VARCHAR, nullable=False)
     
     #relationships
@@ -95,7 +95,8 @@ class User(db.Model, SerializerMixin):
     concerts = association_proxy("user_concerts", "concerts")
     
     #serializations
-    
+    # serialize_rules = ("-user_concerts.user", "-concerts")
+    serialize_only = ("id", "first_name", "username", "email")
     #validations
     @validates('first_name')
     def validate_first_name(self,key,first_name):
