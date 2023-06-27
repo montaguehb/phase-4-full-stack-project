@@ -2,7 +2,7 @@ import React from "react";
 import ConcertCard from "./ConcertCard";
 import { Grid, GridColumn } from "semantic-ui-react";
 
-function ConcertList({ search, sortBy, concerts, handleRemove }) {
+function ConcertList({ search, sortBy, concerts, onDeleteConcert }) {
 
   const concert_list = concerts
     .filter((concert) => {
@@ -21,7 +21,7 @@ function ConcertList({ search, sortBy, concerts, handleRemove }) {
       }})
     .map((concert) => (
       <GridColumn key={concert.id}>
-        <ConcertCard {...concert} />
+        <ConcertCard concert={concert} onDelete={onDeleteConcert}/>
       </GridColumn>
     ));
 
