@@ -5,9 +5,7 @@ from faker import Faker
 from app import app
 from models import db, Artist, Tour, Venue, Concert, User, UserConcert
 
-
 fake = Faker()
-
 
 def make_artists():
     Artist.query.delete()
@@ -15,7 +13,6 @@ def make_artists():
     for _ in range(20):
         db.session.add(Artist(name=fake.first_name(), description=fake.paragraph()))
     db.session.commit()
-
 
 def make_tours():
     Tour.query.delete()

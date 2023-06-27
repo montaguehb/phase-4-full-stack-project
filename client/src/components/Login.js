@@ -41,35 +41,43 @@ const Login = ({login, updateLogin,updateUser}) => {
     else {
       alert("Incorrect Username or Password!")
     }        
- };
+};
 
   return (
     <div>
       {login?<Redirect to="/" />:<h1>Login</h1>}
+
       <Formik
         initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}
         onSubmit={handleSubmit}
       >
+
         {({ isSubmitting }) => (
           <Grid id="login" verticalAlign="middle" columns={1} centered>
+
             <Grid.Column>
               <Form>
+
                 <label>Username:</label>
                 <Field type="text" name="username" />
                 <ErrorMessage name="username" component="div" />
+
                 <label>Password:</label>
                 <Field type="password" name="password" />
                 <ErrorMessage name="password" component="div" />
+
                 <br></br>
                 <Button type="submit" disabled={isSubmitting}>
                   Login
                 </Button>
+
               </Form>
             </Grid.Column>
           </Grid>
         )}
       </Formik>
+
       <div>
         <p>Dont Have An Account?</p>
         <Link to='/signup'>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button }  from "semantic-ui-react"
+
 const Logout = ({updateUser}) => {
     const handleClick = async () => {
         const resp = await fetch("/logout", {
@@ -9,6 +10,7 @@ const Logout = ({updateUser}) => {
           updateUser(false)
         }
     }
+
   return (
     <Button onClick={handleClick}>Logout</Button>
   )

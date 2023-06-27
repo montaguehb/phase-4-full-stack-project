@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { Input, Menu, Header, Button, Dropdown } from "semantic-ui-react";
+import { Input, Menu, Header, Button, Dropdown, Divider } from "semantic-ui-react";
 import Logout from "./Logout"
 
 const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUser}) => {
@@ -26,21 +26,25 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUse
     },
   ];
   return (
-    <Menu id="nav" className="middle aligned">
+    <Menu id="nav" className="middle aligned" borderless inline>
       <Menu.Menu position="left">
+
         <Menu.Item>
           <Link to="/concerts">
             <Header as="h2" icon="ticket alternate" content="FlatTicket" />
           </Link>
         </Menu.Item>
-        <Link to="/concerts">
-          <Menu.Item name="home" />
-        </Link>
-      </Menu.Menu>
-      <Menu.Item position="right">
-        <h2>The number one Place For Concert Tickets!</h2>
+
+        
+
+      {/* </Menu.Menu> */}
+      <Menu.Item >
+        <h2>The Place To Go For Concert Tickets!</h2>
       </Menu.Item>
-      <Menu.Menu position="right">
+
+      
+
+      <Menu.Item position="right">
         <Dropdown
           selection
           value={sortBy}
@@ -48,6 +52,7 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUse
           placeholder="Search by"
           options={options}
         ></Dropdown>
+
         <Menu.Item>
           <Input
             icon="search"
@@ -56,18 +61,26 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUse
             value={search}
           ></Input>
         </Menu.Item>
-        <Menu.Item>
+        
+        <Link to="/concerts" >
+          <Menu.Item name="home" >
+            <Button icon='home'></Button>
+          </Menu.Item>
+        </Link>
+
+        <Menu.Item position="right">
           {user ? (
-            <Link to="/profile">
+            <Link to="/profile" position='right'>
               <Button primary>Profile</Button>
             </Link>
           ) : (
-            <Link to="/login">
+            <Link to="/login" position = 'right'>
               <Button primary>Login</Button>
             </Link>
           )}
         </Menu.Item>
         {user?<Menu.Item><Logout updateUser={updateUser}/></Menu.Item>:<></>}
+      </Menu.Item>
       </Menu.Menu>
     </Menu>
   );

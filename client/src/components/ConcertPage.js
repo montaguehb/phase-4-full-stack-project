@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
-import { Image, Container, Header, Button, Grid } from "semantic-ui-react";
+import { Image, Header, Button, Grid } from "semantic-ui-react";
 
 function ConcertPage({ user, login }) {
   const [concert, setConcert] = useState();
