@@ -4,7 +4,7 @@ import SignUp from "./SignUp";
 import { Button, Container, Icon } from "semantic-ui-react";
 import { useHistory } from 'react-router-dom';
 
-const Profile = ({ sortBy, search, user, setUser }) => {
+const Profile = ({ sortBy, search, user, updateUser }) => {
   const [edit, setEdit] = useState(false);
   const user_concerts = [...user.user_concerts];
   const history = useHistory()
@@ -14,7 +14,7 @@ const Profile = ({ sortBy, search, user, setUser }) => {
     if (resp.ok) {
       alert("Account Deletion Successful!");
       history.push('/concerts')
-      setUser(null)
+      updateUser(null)
     } else {
       alert("Account Deletion Unsuccessful!");
     }
