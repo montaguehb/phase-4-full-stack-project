@@ -7,6 +7,10 @@ function ConcertCard(concert) {
   const location = useLocation();
   const isProfilePath = location.pathname === '/profile';
 
+  const temp_handle_click = () =>{
+    return alert('This button Doesnt Work Right Now :-(')
+  }
+
   return (
     <Link to={`/concerts/${concert.id}`}>
       <Card>
@@ -24,7 +28,7 @@ function ConcertCard(concert) {
         
         {isProfilePath && (
           <Card.Content extra>
-            <Button className="red ui button" circular icon='delete' />
+            <Button className="red ui button" circular icon='delete' onClick={()=>temp_handle_click()}/>
             Remove Ticket
           </Card.Content>
         )}

@@ -2,7 +2,7 @@ import React from "react";
 import ConcertCard from "./ConcertCard";
 import { Grid, GridColumn } from "semantic-ui-react";
 
-function ConcertList({ search, sortBy, concerts }) {
+function ConcertList({ search, sortBy, concerts, handleRemove }) {
 
   const concert_list = concerts
     .filter((concert) => {
