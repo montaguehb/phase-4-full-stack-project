@@ -60,7 +60,7 @@ function App() {
         </Route>
 
         <Route path="/profile">
-          <Profile sortBy={sortBy} search={search} user={user} updateUser={updateUser}/>
+          <Profile sortBy={sortBy} search={search} user={user} setUser={setUser}/>
         </Route>
 
         <Route path="/signup">
