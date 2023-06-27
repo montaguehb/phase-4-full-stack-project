@@ -145,6 +145,7 @@ class Tour(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"))
+    img_url = db.Column(db.String, unique=True)
     
     #relationships
     artist = db.relationship("Artist", back_populates="tours")
@@ -155,7 +156,6 @@ class Tour(db.Model, SerializerMixin):
     #validations
     @validates('name')
     def validate_name(self,key,name):
-    #? should think about implementing regex or not
         if not name or not 2< len(name) <= 20:
             raise ValueError('Tour needs a name, 2-20 characters in length')
         return name
