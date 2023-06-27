@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import ConcertList from "./ConcertList";
 import SignUp from "./SignUp";
 import { Button, Container, Icon } from "semantic-ui-react";
-import { Redirect } from "react-router-dom/cjs/react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const Profile = ({ sortBy, search, user, setUser }) => {
   const [edit, setEdit] = useState(false);
   const user_concerts = [...user.user_concerts];
+  const history = useHistory()
 
   const deleteUser = async () => {
     const resp = await fetch("/profile", { method: "DELETE" });
     if (resp.ok) {
-      alert("Delete Successful!");
+      alert("Account Deletion Successful!");
+      history.push('/concerts')
       setUser(null)
-      return (<Redirect to="/" />)
     } else {
-      alert("Delete Unsuccessful!");
+      alert("Account Deletion Unsuccessful!");
     }
   };
 
@@ -37,9 +38,10 @@ const Profile = ({ sortBy, search, user, setUser }) => {
         ) : (
           <></>
         )}
-        <Button class='negative ui button' onClick={deleteUser} >
-          
+        <Button class='negative ui red button' onClick={deleteUser} >
+    
           <Icon name='trash alternate outline icon'/>Delete Account
+          
         </Button>
       </Container>
       
