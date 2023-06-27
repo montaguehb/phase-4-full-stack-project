@@ -5,12 +5,13 @@ import Footer from "./Footer";
 import AppHeader from './AppHeader'
 import {Route, Switch} from 'react-router-dom';
 import Login from './Login';
-import Signup from './Signup';
-
+import SignUp from './SignUp';
+import Clear from './Clear'
 
 function App() {
   return (
     <div>
+
       <AppHeader/>
       <ConcertCard/>
       <Footer/>
@@ -19,6 +20,7 @@ function App() {
         <Signup></Signup>
         <Login></Login>
       </Switch>
+
     </div>
   );
 }
