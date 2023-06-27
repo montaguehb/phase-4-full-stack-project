@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"; // # remove if unecessary
-import './Cards.css';
+import './ConcertCard.css';
 
 // insert concert info on HTML and render concerts
 function ConcertCard({concert}) {
