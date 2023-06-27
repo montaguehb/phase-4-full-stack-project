@@ -1,5 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useEffect, useState} from "react"; // # remove if unecessary
+import Cards from "./ConcertCard";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 function App() {
   return (
