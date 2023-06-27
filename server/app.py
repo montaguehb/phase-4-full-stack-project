@@ -65,7 +65,7 @@ class Signup(Resource):
         try:
             req = request.get_json()
             new_user = User(
-                first_name=req["first_name"],
+                first_name=req["name"],
                 username=req["username"],
                 email=req["email"],
                 password_hash=req["password"],
@@ -89,7 +89,11 @@ class TourByID(Resource):
         else:
             return make_response({"error": "Tour Not Found"}, 404)
 
-
+class Clear(Resource):
+    def post(self):
+        session.clear()
+        return make_response({}, 202)
+    
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
 api.add_resource(Tours, "/tours")
@@ -100,6 +104,7 @@ api.add_resource(Artists, "/artists")
 api.add_resource(ArtistsById, "/artists/<int:id>")
 api.add_resource(Login, "/login")
 api.add_resource(Signup, "/signup")
+api.add_resource(Clear, "/clear")
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True, use_debugger=False, use_reloader=False)
