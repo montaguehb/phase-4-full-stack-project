@@ -10,6 +10,7 @@ import SignUp from './SignUp';
 import Clear from './Clear'
 
 function App() {
+  
   return (
     <div>
       <Header/>
