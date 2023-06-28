@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ConcertCard from "./ConcertCard";
-import { Card, Grid, GridColumn, Image } from "semantic-ui-react";
+import { Grid, GridColumn} from "semantic-ui-react";
 
-function ConcertList() {
+function ConcertList({search, sortBy}) {
   const [concerts, setConcerts] = useState();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function ConcertList() {
   return (
     <Grid id="concert-list" columns={4} centered padded>
       {concerts ? (
-        concerts.map((concert) => (
+        concerts.filter(concert => concert[`${sortBy}`].includes(search)).map((concert) => (
           <GridColumn key={concert.id}>
             <ConcertCard {...concert} />
           </GridColumn>
