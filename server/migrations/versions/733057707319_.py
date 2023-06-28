@@ -1,8 +1,8 @@
-"""update schema
+"""empty message
 
-Revision ID: d6ee1de92b89
+Revision ID: 733057707319
 Revises: 
-Create Date: 2023-06-27 16:08:26.893088
+Create Date: 2023-06-28 11:58:39.393622
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd6ee1de92b89'
+revision = '733057707319'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,14 +44,14 @@ def upgrade():
     sa.Column('artist_id', sa.Integer(), nullable=True),
     sa.Column('img_url', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['artist_id'], ['artists.id'], name=op.f('fk_tours_artist_id_artists')),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('img_url')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('concerts',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('date', sa.DateTime(), nullable=True),
     sa.Column('venue_id', sa.Integer(), nullable=True),
     sa.Column('tour_id', sa.Integer(), nullable=True),
+    sa.Column('name', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['tour_id'], ['tours.id'], name=op.f('fk_concerts_tour_id_tours')),
     sa.ForeignKeyConstraint(['venue_id'], ['venues.id'], name=op.f('fk_concerts_venue_id_venues')),
     sa.PrimaryKeyConstraint('id')
