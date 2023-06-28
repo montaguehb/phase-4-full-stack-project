@@ -7,7 +7,7 @@ import {Route, Switch} from 'react-router-dom';
 import Clear from './Clear'
 import ConcertPage from './ConcertPage';
 import ConcertList from './ConcertList';
-import Signup from "./SignUp"
+import SignUp from "./SignUp";
 import Login from "./Login"
 
 function App() {
@@ -19,13 +19,21 @@ function App() {
       <Footer/>
       <Switch>
         <Route path='/'></Route>
+        <Route path='/profile'>
+          
+        </Route>
         <Route path='/signup'>
           <SignUp />
         </Route>
         <Route path='/login'>
           <Login />
         </Route>
-
+        <Route path='/concerts'>
+          <ConcertList />
+        </Route>
+        <Route path='/concerts/:id'>
+          <ConcertList />
+        </Route>
       </Switch>
 
     </div>
