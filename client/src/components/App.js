@@ -5,12 +5,14 @@ import {Route, Switch} from 'react-router-dom';
 import Clear from './Clear'
 import ConcertPage from './ConcertPage';
 import ConcertList from './ConcertList';
+
 import Signup from "./SignUp"
 import Login from "./Login"
 import Nav from './Nav';
 import Profile from './Profile';
 
 function App() {
+
   const [search, setSearch] = useState("")
   const [sortBy, setSortBy] = useState("name")
   const [concerts, setConcerts] = useState();
@@ -39,11 +41,24 @@ function App() {
       <Profile sortBy={sortBy} search={search}/>
       <Login />
       <Footer/>
-      {/* <Switch>
-        <Route path='/'/>
-        <Signup></Signup>
-        <Login></Login>
-      </Switch> */}
+      <Switch>
+        <Route path='/'></Route>
+        <Route path='/profile'>
+          
+        </Route>
+        <Route path='/signup'>
+          <SignUp />
+        </Route>
+        <Route path='/login'>
+          <Login />
+        </Route>
+        <Route path='/concerts'>
+          <ConcertList />
+        </Route>
+        <Route path='/concerts/:id'>
+          <ConcertList />
+        </Route>
+      </Switch>
 
     </div>
   );
