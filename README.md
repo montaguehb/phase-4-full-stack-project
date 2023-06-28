@@ -2,6 +2,7 @@
 <sub>🎹A project By: Historia Montague, Jay Lim, and Nolan Nash🎹</sub>
 
 ## 👨‍🎤Project Overview👩‍🎤
+Welcome to FlatTicket. Our application 
 
 ---
 
