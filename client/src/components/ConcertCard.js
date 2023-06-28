@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react"; // # remove if unecessary
 import './ConcertCard.css';
 
 // insert concert info on HTML and render concerts
-function ConcertCard({concert}) {
+function ConcertCard(concert) {
   return (
     <li className="card">'
-      <img src="https://picsum.photos/" alt={concert} />
-      <h4>Concert Name Placeholder?</h4>
-      <p>Artist: Artist Name Placeholder?</p>
-      <p>Venue: Venue Name Placeholder?</p>
+      <img src={concert.tour.img_url} alt={concert.tour.name} />
+      <h4>name: {concert?.name}</h4>
+      <p>Artist: {concert?.tour?.artist?.name}</p>
+      <p>Venue: {concert?.venue?.name}</p>
     </li>
   )
 }

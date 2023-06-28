@@ -5,17 +5,15 @@ import Footer from "./Footer";
 import Nav from "./Nav";
 import Header from './Header.js'
 import {Route, Switch} from 'react-router-dom';
-import Login from './Login';
-import SignUp from './SignUp';
 import Clear from './Clear'
+import ConcertPage from './ConcertPage';
 
 function App() {
   
   return (
     <div>
       <Header/>
-      <Login></Login>
-      <SignUp></SignUp>
+      <ConcertPage></ConcertPage>
       <Footer/>
       <Clear></Clear>
     </div>
