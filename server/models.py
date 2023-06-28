@@ -103,35 +103,35 @@ class User(db.Model, SerializerMixin):
 
     # serializations
     # serialize_rules = ("-user_concerts.user", "-concerts")
-    serialize_only = ("id", "first_name", "username", "email")
+    serialize_only = ("id", "first_name", "username", "email", "user_concerts")
 
     # validations
-    @validates("first_name")
-    def validate_first_name(self, key, first_name):
-        first_name_regex = "[A-Z][a-z]*"
-        first_name_regex = re.compile(first_name_regex)
+    # @validates("first_name")
+    # def validate_first_name(self, _, first_name):
+    #     first_name_regex = "[A-Z][a-z]*"
+    #     first_name_regex = re.compile(first_name_regex)
 
-        if not first_name or not re.fullmatch(first_name_regex, first_name):
-            raise ValueError("User needs a first name, 2-20 characters in length")
-        return first_name
+    #     if not first_name or not re.fullmatch(first_name_regex, first_name):
+    #         raise ValueError("User needs a first name, 2-20 characters in length")
+    #     return first_name
 
-    @validates("username")
-    def validate_username(self, key, username):
-        username_regex = "^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$"
-        username_regex = re.compile(username)
+    # @validates("username")
+    # def validate_username(self, _, username):
+    #     username_regex = "^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$"
+    #     username_regex = re.compile(username)
 
-        if not username or not re.fullmatch(username_regex, username):
-            raise ValueError("User needs a username, 2-20 characters in length")
-        return username
+    #     if not username or not re.fullmatch(username_regex, username):
+    #         raise ValueError("User needs a username, 2-20 characters in length")
+    #     return username
 
-    @validates("email")
-    def validate_email(self, key, email):
-        # ? this one is going to need more work than others...
-        email_regex = "[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}"
-        email_regex = re.compile(email)
-        if not email or not re.fullmatch(email_regex, email):
-            raise ValueError("Email is required")
-        return email
+    # @validates("email")
+    # def validate_email(self, _, email):
+    #     # ? this one is going to need more work than others...
+    #     email_regex = "[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}"
+    #     email_regex = re.compile(email)
+    #     if not email or not re.fullmatch(email_regex, email):
+    #         raise ValueError("Email is required")
+    #     return email
 
     # other methods
 

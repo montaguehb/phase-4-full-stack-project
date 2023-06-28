@@ -1,51 +1,61 @@
-import {React, useEffect, useState, useContext} from 'react';
-import ConcertCard  from "./ConcertCard";
-import Footer from "./Footer"; 
-import {Route, Switch} from 'react-router-dom';
-import Clear from './Clear'
-import ConcertPage from './ConcertPage';
-import ConcertList from './ConcertList';
+import { React, useEffect, useState, useContext } from "react";
+import ConcertCard from "./ConcertCard";
+import Footer from "./Footer";
+import { Route, Switch } from "react-router-dom";
+import Clear from "./Clear";
+import ConcertPage from "./ConcertPage";
+import ConcertList from "./ConcertList";
 
-import Signup from "./SignUp"
-import Login from "./Login"
-import Nav from './Nav';
+import SignUp from "./SignUp";
+import Login from "./Login";
+import Nav from "./Nav";
+import Profile from "./Profile";
 
 function App() {
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("name");
+  const [concerts, setConcerts] = useState();
 
-  const [search, setSearch] = useState("")
-  const [sortBy, setSortBy] = useState("name")
+  useEffect(() => {
+    (async () => {
+      const resp = await fetch("/concerts");
+      if (resp.ok) {
+        setConcerts(await resp.json());
+      } else {
+        console.error("Unable to set concerts");
+      }
+    })();
+  }, []);
 
-  const handleSearchChange = e => {
+  const handleSearchChange = (e) => {
     // todo add yup validations to search
-    setSearch(e.target.value)
-  }
+    setSearch(e.target.value);
+  };
 
   return (
     <div>
-
-      <Nav search={search} handleSearchChange={handleSearchChange}/>
-      {/* <ConcertList search={search} sortBy={sortBy}/> */}
-      <ConcertPage />
-      <Footer/>
+      <Nav search={search} handleSearchChange={handleSearchChange} />
       <Switch>
-        <Route path='/'></Route>
-        <Route path='/profile'>
-          
+        <Route path="/">
+          <ConcertList search={search} sortBy={sortBy} />
         </Route>
-        <Route path='/signup'>
+        <Route path="/profile">
+          <Profile sortBy={sortBy} search={search} />
+        </Route>
+        <Route path="/signup">
           <SignUp />
         </Route>
-        <Route path='/login'>
+        <Route path="/login">
           <Login />
         </Route>
-        <Route path='/concerts'>
-          <ConcertList />
+        <Route path="/concerts">
+          <ConcertList search={search} sortBy={sortBy} />
         </Route>
-        <Route path='/concerts/:id'>
-          <ConcertList />
+        <Route path="/concerts/:id">
+          <ConcertPage />
         </Route>
       </Switch>
-
+      <Footer />
     </div>
   );
 }
