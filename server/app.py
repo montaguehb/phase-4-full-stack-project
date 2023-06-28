@@ -105,7 +105,7 @@ class Clear(Resource):
 
 class Profile(Resource):
     def get(self):
-        if session["user_id"] == request.get_json().get("id"):
+        if session.get("user_id"):
             return make_response(
                 db.session.get(User, session["user_id"]).to_dict(), 200
             )

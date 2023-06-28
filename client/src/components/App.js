@@ -37,6 +37,7 @@ function App() {
       <Nav search={search} handleSearchChange={handleSearchChange}/>
       {/* <ConcertList search={search} sortBy={sortBy}/> */}
       <Profile sortBy={sortBy} search={search}/>
+      <Login />
       <Footer/>
       {/* <Switch>
         <Route path='/'/>
