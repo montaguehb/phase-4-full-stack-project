@@ -1,16 +1,22 @@
-import React, {useEffect, useState} from "react"; // # remove if unecessary
-import './ConcertCard.css';
+import React from "react"; // # remove if unecessary
+import { Card, Image } from "semantic-ui-react";
 
 // insert concert info on HTML and render concerts
 function ConcertCard(concert) {
   return (
-    <li className="card">'
-      <img src={concert.tour.img_url} alt={concert.tour.name} />
-      <h4>name: {concert?.name}</h4>
-      <p>Artist: {concert?.tour?.artist?.name}</p>
-      <p>Venue: {concert?.venue?.name}</p>
-    </li>
-  )
+    <Card>
+      <Image src={concert?.tour?.img_url} alt={concert?.tour?.name}/>
+      <Card.Content>
+        <Card.Header>{concert?.name}</Card.Header>
+        <Card.Meta>
+          <p>Venue: {concert?.venue?.name}</p>
+        </Card.Meta>
+        <Card.Description>
+          Artist: {concert?.tour?.artist?.name}
+        </Card.Description>
+      </Card.Content>
+    </Card>
+  );
 }
 
-export default ConcertCard
+export default ConcertCard;
