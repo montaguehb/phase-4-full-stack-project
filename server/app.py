@@ -1,6 +1,8 @@
 from flask import make_response, request, session
 from flask_restful import Resource
 
+import re
+
 from config import app, db, api
 
 # Local imports
@@ -52,12 +54,17 @@ class VenuesByID(Resource):
 class Login(Resource):
     def post(self):
         req = request.get_json()
-        if user := User.query.filter(User.username == req.get("username")).first():
-            if user.authenticate(req.get("password")):
-                session["user_id"] = user.id
-                return make_response(user.to_dict(), 200)
-        else:
-            return make_response({"error": "user not authorized"}, 403)
+
+        username_regex = "^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$"
+        username_regex = re.compile(username_regex)
+
+        if re.fullmatch(username_regex, req.get("username")):
+            if user := User.query.filter(User.username == req.get("username")).first():
+                if user.authenticate(req.get("password")):
+                    session["user_id"] = user.id
+                    return make_response(user.to_dict(), 200)
+
+        return make_response({"error": "user not authorized"}, 403)
 
 
 class Signup(Resource):
@@ -89,11 +96,13 @@ class TourByID(Resource):
         else:
             return make_response({"error": "Tour Not Found"}, 404)
 
+
 class Clear(Resource):
     def post(self):
         session.clear()
         return make_response({}, 202)
-    
+
+
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
 api.add_resource(Tours, "/tours")
