@@ -6,7 +6,7 @@ import re
 from config import app, db, api
 
 # Local imports
-from models import Concert, Venue, Artist, User, Tour
+from models import Concert, Venue, Artist, User, Tour, UserConcert
 
 
 # ? I feel like there is a way we can reduce the amount of code for the BY ID as well as most of the ~show it in a list ones~ (?) --> seems like a matteo approved(/best practice) refactor
@@ -103,6 +103,14 @@ class Clear(Resource):
         return make_response({}, 202)
 
 
+class Profile(Resource):
+    def get(self):
+        if session["user_id"] == request.get_json().get("id"):
+            return make_response(
+                db.session.get(User, session["user_id"]).to_dict(), 200
+            )
+
+
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
 api.add_resource(Tours, "/tours")
@@ -114,6 +122,7 @@ api.add_resource(ArtistsById, "/artists/<int:id>")
 api.add_resource(Login, "/login")
 api.add_resource(Signup, "/signup")
 api.add_resource(Clear, "/clear")
+api.add_resource(Profile, "/profile")
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True, use_debugger=False, use_reloader=False)

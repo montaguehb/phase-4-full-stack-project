@@ -103,11 +103,11 @@ class User(db.Model, SerializerMixin):
 
     # serializations
     # serialize_rules = ("-user_concerts.user", "-concerts")
-    serialize_only = ("id", "first_name", "username", "email")
+    serialize_only = ("id", "first_name", "username", "email", "user_concerts")
 
     # validations
     @validates("first_name")
-    def validate_first_name(self, key, first_name):
+    def validate_first_name(self, _, first_name):
         first_name_regex = "[A-Z][a-z]*"
         first_name_regex = re.compile(first_name_regex)
 
@@ -116,7 +116,7 @@ class User(db.Model, SerializerMixin):
         return first_name
 
     @validates("username")
-    def validate_username(self, key, username):
+    def validate_username(self, _, username):
         username_regex = "^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$"
         username_regex = re.compile(username)
 
@@ -125,7 +125,7 @@ class User(db.Model, SerializerMixin):
         return username
 
     @validates("email")
-    def validate_email(self, key, email):
+    def validate_email(self, _, email):
         # ? this one is going to need more work than others...
         email_regex = "[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}"
         email_regex = re.compile(email)
