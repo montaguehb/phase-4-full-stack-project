@@ -1,5 +1,5 @@
-from flask import Flask, make_response, request, session
-from flask_restful import Api, Resource
+from flask import make_response, request, session
+from flask_restful import Resource
 
 import re
 

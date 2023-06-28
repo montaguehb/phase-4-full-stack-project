@@ -34,22 +34,19 @@ class Concert(db.Model, SerializerMixin):
     venue_id = db.Column(db.Integer, db.ForeignKey("venues.id"))
     tour_id = db.Column(db.Integer, db.ForeignKey("tours.id"))
 
-    # relationships
+    name = db.Column(db.String)
+    
+    #relationships
     venue = db.relationship("Venue", back_populates="concerts")
     tour = db.relationship("Tour", back_populates="concerts")
     user_concerts = db.relationship("UserConcert", back_populates="concert")
     users = association_proxy("user_concerts", "user")
 
-    # serialization
-    serialize_rules = (
-        "-users",
-        "-venue.concerts",
-        "-tour.concerts",
-        "user_concerts.concert",
-    )
 
-    # validations
-
+    #serialization
+    serialize_rules = ("-users", "-venue.concerts", "-tour.concerts", "-user_concerts")
+    
+    #validations
 
 class Venue(db.Model, SerializerMixin):
     __tablename__ = "venues"

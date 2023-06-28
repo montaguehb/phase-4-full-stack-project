@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ConcertCard from "./ConcertCard";
 
 function ConcertList({concerts}) {
+  const concert_list = concerts.map(concert => <ConcertCard key={concert.id} {...concert}/>)
   return (
-    <ul className="cards">{concerts.map((concert) => {
-      return <ConcertCard key={concert.id} concert={concert}/> // pass individual concert to concertcard as prop
-        }
-      )}
-    </ul>
+    <ul className="cards">{concert_list}</ul>
   );
 }
 

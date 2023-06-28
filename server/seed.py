@@ -25,7 +25,7 @@ def make_tours():
     for _ in range(20):
         db.session.add(Tour(
             name=fake.text(max_nb_chars=20),
-            artist_id=random.randint(0, len(Artist.query.all()) - 1),
+            artist_id=random.randint(1, len(Artist.query.all()) - 1),
             img_url= fake.image_url()
         )
         
@@ -49,9 +49,10 @@ def make_concerts():
     
     for _ in range(20):
         db.session.add(Concert(
+            name=fake.text(max_nb_chars=20),
             date=fake.date_this_year(),
-            venue_id=random.randint(0, len(Venue.query.all()) - 1),
-            tour_id=random.randint(0, len(Tour.query.all()) - 1))
+            venue_id=random.randint(1, len(Venue.query.all()) - 1),
+            tour_id=random.randint(1, len(Tour.query.all()) - 1))  
         )  
     db.session.commit()      
 
@@ -71,8 +72,8 @@ def make_user_concerts():
     
     for _ in range(20):
         db.session.add(UserConcert(
-            concert_id=random.randint(0, len(Concert.query.all()) - 1),
-            user_id=random.randint(0, len(User.query.all()) - 1)))
+            concert_id=random.randint(1, len(Concert.query.all()) - 1),
+            user_id=random.randint(1, len(User.query.all()) - 1)))
 
     db.session.commit()
 
