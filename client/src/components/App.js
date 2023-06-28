@@ -11,7 +11,6 @@ import Signup from "./SignUp"
 import Login from "./Login"
 
 function App() {
-  
   return (
     <div>
 
@@ -19,9 +18,14 @@ function App() {
       <ConcertCard/>
       <Footer/>
       <Switch>
-        <Route path='/'/>
-        <Signup></Signup>
-        <Login></Login>
+        <Route path='/'></Route>
+        <Route path='/signup'>
+          <SignUp />
+        </Route>
+        <Route path='/login'>
+          <Login />
+        </Route>
+
       </Switch>
 
     </div>
