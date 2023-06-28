@@ -26,7 +26,7 @@ def make_tours():
         db.session.add(Tour(
             name=fake.text(max_nb_chars=20),
             artist_id=random.randint(1, len(Artist.query.all()) - 1),
-            img_url= fake.image_url()
+            img_url="https://placehold.co/200x200"
         )
         
     )

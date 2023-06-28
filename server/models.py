@@ -146,7 +146,7 @@ class Tour(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"))
-    img_url = db.Column(db.String, unique=True)
+    img_url = db.Column(db.String)
     
     #relationships
     artist = db.relationship("Artist", back_populates="tours")
