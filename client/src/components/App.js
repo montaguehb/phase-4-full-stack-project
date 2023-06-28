@@ -35,9 +35,6 @@ function App() {
   return (
     <div>
       <Nav search={search} handleSearchChange={handleSearchChange} />
-
-      <Login />
-      <Footer />
       <Switch>
         <Route path="/">
           <ConcertList search={search} sortBy={sortBy} />
@@ -58,6 +55,7 @@ function App() {
           <ConcertPage />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }
