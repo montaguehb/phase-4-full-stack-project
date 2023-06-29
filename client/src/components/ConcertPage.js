@@ -28,7 +28,7 @@ function ConcertPage() {
       />
       {/* todo add descriptions for concerts */}
       <p>Venue: {concert?.venue?.name}</p>
-      <p>Artist: {concert?.tour?.artist?.name}</p>
+      <p>Artist: {concert?.tour?.artist?.description}</p>
       <Button secondary>Get ticket</Button>
       <p>Insert remaining tickets here</p>
     </Container>
