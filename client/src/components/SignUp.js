@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
+import { Form, Field } from "formik-semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
-
-const SignUp = () => {
+const SignUp = ({login, updateLogin}) => {
   const signUpSchema = Yup.object().shape({
     username: Yup.string()
       .min(2, "Invalid username")
@@ -21,40 +23,39 @@ const SignUp = () => {
       },
       body: JSON.stringify(values),
     });
-    if (resp.ok) {
-      const data = await resp.json();
-      console.log(data);
-    } else {
-      alert("Unable to signup");
-    }
+    updateLogin(resp.ok)
   };
 
   return (
     <div>
-      <h1>Signup</h1>
+      {login?<Redirect to="/profile" />:<h1>Signup</h1>}
       <Formik
         initialValues={{ name: "", email: "", username: "", password: "" }}
         validationSchema={signUpSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <label>Name:</label>
-            <Field type="name" name="name" />
-            <ErrorMessage name="name" component="div" />
-            <label>Username:</label>
-            <Field type="username" name="username" />
-            <ErrorMessage name="username" component="div" />
-            <label>Email:</label>
-            <Field type="email" name="email" />
-            <ErrorMessage name="email" component="div" />
-            <label>Password:</label>
-            <Field type="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
+          <Grid id="login" verticalAlign="middle" columns={1} centered>
+            <Grid.Column>
+              <Form>
+                <label>Name:</label>
+                <Field type="text" name="name" />
+                <ErrorMessage name="name" component="div" />
+                <label>Username:</label>
+                <Field type="text" name="username" />
+                <ErrorMessage name="username" component="div" />
+                <label>Email:</label>
+                <Field type="email" name="email" />
+                <ErrorMessage name="email" component="div" />
+                <label>Password:</label>
+                <Field type="password" name="password" />
+                <ErrorMessage name="password" component="div" />
+                <Button type="submit" disabled={isSubmitting}>
+                  Sign up
+                </Button>
+              </Form>
+            </Grid.Column>
+          </Grid>
         )}
       </Formik>
     </div>
