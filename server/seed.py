@@ -25,7 +25,7 @@ def make_tours():
             Tour(
                 name=fake.text(max_nb_chars=20),
                 artist_id=random.randint(1, len(Artist.query.all()) - 1),
-                img_url="https://placehold.co/200x200",
+                img_url="https://picsum.photos/200",
             )
         )
     db.session.commit()
@@ -64,18 +64,22 @@ def make_users():
     User.query.delete()
 
     for _ in range(20):
-        db.session.add(User(
-            first_name=fake.first_name(),
-            username=fake.last_name(),
-            email=fake.email(),
-            password_hash="password")
+        db.session.add(
+            User(
+                first_name=fake.first_name(),
+                username=fake.last_name(),
+                email=fake.email(),
+                password_hash="password",
+            )
         )
-    db.session.add(User(
-        first_name="test",
-        username="test",
-        email="test@test.com",
-        password_hash="hunter2"
-    ))
+    db.session.add(
+        User(
+            first_name="test",
+            username="test",
+            email="test@test.com",
+            password_hash="hunter2",
+        )
+    )
     db.session.commit()
 
 
