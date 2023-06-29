@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Input, Menu, Header, Button, Dropdown } from "semantic-ui-react";
 
-const Nav = ({ search, handleSearchChange, sortBy, handleSortBy }) => {
+const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, login }) => {
   const options = [
     {
       key: "name",
@@ -20,15 +21,19 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy }) => {
       text: "Artist",
       value: "artist",
       content: "Artist",
-    }
+    },
   ];
   return (
     <Menu id="nav" className="middle aligned">
       <Menu.Menu position="left">
         <Menu.Item>
-          <Header as="h2" icon="ticket alternate" content="FlatTicket" />
+          <Link to="/concerts">
+            <Header as="h2" icon="ticket alternate" content="FlatTicket" />
+          </Link>
         </Menu.Item>
-        <Menu.Item name="home" />
+        <Link to="/concerts">
+          <Menu.Item name="home" />
+        </Link>
       </Menu.Menu>
       <Menu.Menu position="right">
         <Dropdown
@@ -47,7 +52,15 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy }) => {
           ></Input>
         </Menu.Item>
         <Menu.Item>
-          <Button primary>Login</Button>
+          {login ? (
+            <Link to="/profile">
+              <Button primary>Profile</Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button primary>Login</Button>
+            </Link>
+          )}
         </Menu.Item>
       </Menu.Menu>
     </Menu>
