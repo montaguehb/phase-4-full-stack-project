@@ -1,8 +1,7 @@
 import { React, useEffect, useState, useContext } from "react";
-import ConcertCard from "./ConcertCard";
 import Footer from "./Footer";
 import { Route, Switch } from "react-router-dom";
-import Clear from "./Logout";
+import Logout from "./Logout";
 import ConcertPage from "./ConcertPage";
 import ConcertList from "./ConcertList";
 
