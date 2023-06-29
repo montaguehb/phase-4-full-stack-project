@@ -2,7 +2,7 @@ import { React, useEffect, useState, useContext } from "react";
 import ConcertCard from "./ConcertCard";
 import Footer from "./Footer";
 import { Route, Switch } from "react-router-dom";
-import Clear from "./Clear";
+import Clear from "./Logout";
 import ConcertPage from "./ConcertPage";
 import ConcertList from "./ConcertList";
 
@@ -38,10 +38,15 @@ function App() {
     setSortBy(e.target.textContent);
   };
 
+  const updateLogin = bool => {
+    setLogin(bool)
+  }
+  
   return (
     <div>
       <Nav
         search={search}
+        updateLogin={updateLogin}
         handleSearchChange={handleSearchChange}
         handleSortBy={handleSortBy}
         login={login}
@@ -67,7 +72,6 @@ function App() {
         </Route>
       </Switch>
       <Footer />
-      <Clear />
     </div>
   );
 }

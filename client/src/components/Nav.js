@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Input, Menu, Header, Button, Dropdown } from "semantic-ui-react";
-
-const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, login }) => {
+import Logout from "./Logout"
+const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, login, updateLogin}) => {
   const options = [
     {
       key: "name",
@@ -62,6 +62,7 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, login }) => {
             </Link>
           )}
         </Menu.Item>
+        {login?<Menu.Item><Logout updateLogin={updateLogin}/></Menu.Item>:<></>}
       </Menu.Menu>
     </Menu>
   );

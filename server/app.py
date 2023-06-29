@@ -102,9 +102,9 @@ class TourByID(Resource):
             return make_response({"error": "Tour Not Found"}, 404)
 
 
-class Clear(Resource):
+class Logout(Resource):
     def post(self):
-        session.clear()
+        session.Logout()
         return make_response({}, 202)
 
 
@@ -126,7 +126,7 @@ api.add_resource(Artists, "/artists")
 api.add_resource(ArtistsById, "/artists/<int:id>")
 api.add_resource(Login, "/login")
 api.add_resource(Signup, "/signup")
-api.add_resource(Clear, "/clear")
+api.add_resource(Logout, "/logout")
 api.add_resource(Profile, "/profile")
 
 if __name__ == "__main__":
