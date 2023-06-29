@@ -14,7 +14,7 @@ import Profile from "./Profile";
 function App() {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("name");
-  const [concerts, setConcerts] = useState();
+  const [concerts, setConcerts] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -32,12 +32,19 @@ function App() {
     setSearch(e.target.value);
   };
 
+  const handleSortBy = (e) => {
+    setSortBy(e.target.textContent);
+  };
   return (
     <div>
-      <Nav search={search} handleSearchChange={handleSearchChange} />
+      <Nav search={search} handleSearchChange={handleSearchChange} handleSortBy={handleSortBy}/>
       <Switch>
         <Route path="/">
-          <ConcertList search={search} sortBy={sortBy} />
+          <ConcertList
+            concerts={concerts}
+            search={search}
+            sortBy={sortBy}
+          />
         </Route>
         <Route path="/profile">
           <Profile sortBy={sortBy} search={search} />
@@ -49,7 +56,11 @@ function App() {
           <Login />
         </Route>
         <Route path="/concerts">
-          <ConcertList search={search} sortBy={sortBy} />
+          <ConcertList
+            concerts={concerts}
+            search={search}
+            sortBy={sortBy}
+          />
         </Route>
         <Route path="/concerts/:id">
           <ConcertPage />
