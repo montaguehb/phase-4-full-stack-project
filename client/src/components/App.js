@@ -15,6 +15,7 @@ function App() {
   const [sortBy, setSortBy] = useState("name");
   const [concerts, setConcerts] = useState([]);
   const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -37,9 +38,13 @@ function App() {
     setSortBy(e.target.textContent);
   };
   
-  const updateLogin = (bool) => {
-    setLogin(bool)
+  const updateLogin = () => {
+    setLogin(val => !val)
   } 
+
+  const updateUser =(user)=>{
+    setUser(user)
+  }
   
   return (
     <div>
@@ -55,19 +60,19 @@ function App() {
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/profile">
-          <Profile sortBy={sortBy} search={search} />
+          <Profile sortBy={sortBy} search={search} user={user}/>
         </Route>
         <Route path="/signup">
           <SignUp login={login} updateLogin={updateLogin} method={"POST"}/>
         </Route>
         <Route path="/login">
-          <Login login={login} updateLogin={updateLogin}/>
+          <Login login={login} updateLogin={updateLogin} updateUser={updateUser}/>
         </Route>
         <Route exact path="/concerts">
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/concerts/:id">
-          <ConcertPage />
+          <ConcertPage user={user} login={login}/>
         </Route>
       </Switch>
       <Footer />
