@@ -17,7 +17,7 @@ const Profile = ({sortBy, search}) => {
 
   return (
     <div>
-      {profile ? <ConcertList concerts={profile.user_concerts.map(concerct => concerct.concert)} sortBy={sortBy} search={search}/>:<div>loading...</div>}
+      {profile ? <ConcertList concerts={profile.user_concerts.map(concert => concert.concert)} sortBy={sortBy} search={search}/>:<div>loading...</div>}
     </div>
   )
 }
