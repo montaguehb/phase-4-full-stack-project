@@ -2,25 +2,27 @@ import React from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Field } from "formik-semantic-ui-react";
 import { Button, Grid } from "semantic-ui-react";
+import {Link, useHistory} from 'react-router-dom';
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
-const Login = ({login, updateLogin}) => {
+const Login = ({login, updateLogin,updateUser}) => {
+  const history = useHistory('/')
   const loginSchema = Yup.object().shape({
     username: Yup
       .string()
       .min(2, "Invalid username")
       .max(50, "Invalid username")
-      .required("Enter Correct Username")
-      .matches(
-        /^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$/
-      ),
+      .required("Enter Correct Username"),
+      // .matches(
+      //   /^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$/
+      // ),
     password: Yup
       .string()
       .required("Enter Correct Password")
-      .matches(
-        /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$/
-      ),
+      // .matches(
+      //   /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$/
+      // ),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -32,6 +34,7 @@ const Login = ({login, updateLogin}) => {
       body: JSON.stringify(values),
     });
     updateLogin(resp.ok)
+    history.push('/')
   };
 
   return (
@@ -61,6 +64,12 @@ const Login = ({login, updateLogin}) => {
           </Grid>
         )}
       </Formik>
+      <div>
+        <p>Dont Have An Account?</p>
+        <Link to='/signup'>
+          <Button>Click Here To Sign Up</Button>
+        </Link>
+      </div>
     </div>
   );
 };

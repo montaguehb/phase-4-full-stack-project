@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import ConcertList from './ConcertList';
 
-const Profile = ({sortBy, search}) => {
+const Profile = ({sortBy, search, user}) => {
   const [profile, setProfile] = useState("");
-
+  
   useEffect(() => {
     (async () => {
       const resp = await fetch("/profile");

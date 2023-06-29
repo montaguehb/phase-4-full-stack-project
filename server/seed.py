@@ -64,13 +64,18 @@ def make_users():
     User.query.delete()
 
     for _ in range(20):
-        db.session.add(
-            User(
-                first_name=fake.first_name(),
-                username=fake.last_name(),
-                email=fake.email(),
-            )
+        db.session.add(User(
+            first_name=fake.first_name(),
+            username=fake.last_name(),
+            email=fake.email(),
+            password_hash="password")
         )
+    db.session.add(User(
+        first_name="test",
+        username="test",
+        email="test@test.com",
+        password_hash="hunter2"
+    ))
     db.session.commit()
 
 

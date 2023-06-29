@@ -8,12 +8,9 @@ from config import app, db, api
 # Local imports
 from models import Concert, Venue, Artist, User, Tour, UserConcert
 
-
-# ? I feel like there is a way we can reduce the amount of code for the BY ID as well as most of the ~show it in a list ones~ (?) --> seems like a matteo approved(/best practice) refactor
 class Artists(Resource):
     def get(self):
         return make_response([artist.to_dict() for artist in Artist.query.all()], 200)
-
 
 class ArtistsById(Resource):
     def get(self):
@@ -114,6 +111,19 @@ class Profile(Resource):
             return make_response(
                 db.session.get(User, session["user_id"]).to_dict(), 200
             )
+    def post(self,concert_id):
+        if session.get('user_id') and session.get('concert_id'):
+            try:
+                r = request.json()
+                new_concert = UserConcert(
+                    user_id = r[self.id],
+                    concert_id = r[concert_id],
+                )
+                db.session.add(new_concert)
+                db.session.commit()
+                return make_response(new_concert.to_dict(),200)
+            except Exception as e:
+                return make_response({"error": e}, 400)
 
 
 api.add_resource(Concerts, "/concerts")
