@@ -57,14 +57,19 @@ class Login(Resource):
 
         username_regex = "^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$"
         username_regex = re.compile(username_regex)
-
         if re.fullmatch(username_regex, req.get("username")):
             if user := User.query.filter(User.username == req.get("username")).first():
                 if user.authenticate(req.get("password")):
                     session["user_id"] = user.id
                     return make_response(user.to_dict(), 200)
-
         return make_response({"error": "user not authorized"}, 403)
+
+    def get(self):
+        if session.get("user_id"):
+            return make_response(
+                db.session.get(User, session["user_id"]).to_dict(), 200
+            )
+        return make_response({"error": "Unable to login"}, 403)
 
 
 class Signup(Resource):

@@ -15,15 +15,18 @@ function App() {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [concerts, setConcerts] = useState([]);
+  const [login, setLogin] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const resp = await fetch("/concerts");
-      if (resp.ok) {
-        setConcerts(await resp.json());
+      const [concert_resp, auth_resp] = await Promise.all([fetch("/concerts"), fetch("/login")]);
+      debugger
+      if (concert_resp.ok) {
+        setConcerts(await concert_resp.json());
       } else {
         console.error("Unable to set concerts");
       }
+      setLogin(auth_resp.ok)
     })();
   }, []);
 
@@ -35,16 +38,18 @@ function App() {
   const handleSortBy = (e) => {
     setSortBy(e.target.textContent);
   };
+
   return (
     <div>
-      <Nav search={search} handleSearchChange={handleSearchChange} handleSortBy={handleSortBy}/>
+      <Nav
+        search={search}
+        handleSearchChange={handleSearchChange}
+        handleSortBy={handleSortBy}
+        login={login}
+      />
       <Switch>
-        <Route path="/">
-          <ConcertList
-            concerts={concerts}
-            search={search}
-            sortBy={sortBy}
-          />
+        <Route exact path="/">
+          <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/profile">
           <Profile sortBy={sortBy} search={search} />
@@ -55,18 +60,15 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/concerts">
-          <ConcertList
-            concerts={concerts}
-            search={search}
-            sortBy={sortBy}
-          />
+        <Route exact path="/concerts">
+          <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/concerts/:id">
           <ConcertPage />
         </Route>
       </Switch>
       <Footer />
+      <Clear />
     </div>
   );
 }
