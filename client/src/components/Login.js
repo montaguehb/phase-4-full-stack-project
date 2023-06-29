@@ -1,5 +1,7 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
+import { Form, Field } from "formik-semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 
 const Login = () => {
@@ -36,17 +38,19 @@ const Login = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <label>Username:</label>
-            <Field type="username" name="username" />
-            <ErrorMessage name="username" component="div" />
-            <label>Password:</label>
-            <Field type="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
+          <Grid>
+            <Form>
+              <label>Username:</label>
+              <Field type="username" name="username" />
+              <ErrorMessage name="username" component="div" />
+              <label>Password:</label>
+              <Field type="password" name="password" />
+              <ErrorMessage name="password" component="div" />
+              <Button type="submit" disabled={isSubmitting}>
+                Submit
+              </Button>
+            </Form>
+          </Grid>
         )}
       </Formik>
     </div>
