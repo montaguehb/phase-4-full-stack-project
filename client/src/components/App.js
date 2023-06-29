@@ -38,6 +38,9 @@ function App() {
     setSortBy(e.target.textContent);
   };
 
+  const updateLogin = (bool) => {
+    setLogin(bool)
+  } 
   return (
     <div>
       <Nav
@@ -57,7 +60,7 @@ function App() {
           <SignUp />
         </Route>
         <Route path="/login">
-          <Login />
+          <Login login={login} updateLogin={updateLogin}/>
         </Route>
         <Route exact path="/concerts">
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
@@ -67,7 +70,6 @@ function App() {
         </Route>
       </Switch>
       <Footer />
-      <Clear />
     </div>
   );
 }
