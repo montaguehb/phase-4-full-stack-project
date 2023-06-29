@@ -20,7 +20,7 @@ function ConcertPage() {
     <Container className="middle aligned">
       <Header as="h2">{concert?.name}</Header>
       <Image
-        src={"https://placeholder.co/500x500"}
+        src={"https://picsum.photos/500"}
         alt={concert?.tour?.name}
         size="large"
         centered

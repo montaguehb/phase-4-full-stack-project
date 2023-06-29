@@ -35,18 +35,18 @@ class Concert(db.Model, SerializerMixin):
     tour_id = db.Column(db.Integer, db.ForeignKey("tours.id"))
 
     name = db.Column(db.String)
-    
-    #relationships
+
+    # relationships
     venue = db.relationship("Venue", back_populates="concerts")
     tour = db.relationship("Tour", back_populates="concerts")
     user_concerts = db.relationship("UserConcert", back_populates="concert")
     users = association_proxy("user_concerts", "user")
 
-
-    #serialization
+    # serialization
     serialize_rules = ("-users", "-venue.concerts", "-tour.concerts", "-user_concerts")
-    
-    #validations
+
+    # validations
+
 
 class Venue(db.Model, SerializerMixin):
     __tablename__ = "venues"
@@ -158,8 +158,8 @@ class Tour(db.Model, SerializerMixin):
     name = db.Column(db.String)
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"))
     img_url = db.Column(db.String)
-    
-    #relationships
+
+    # relationships
     artist = db.relationship("Artist", back_populates="tours")
     concerts = db.relationship("Concert", back_populates="tour")
 
@@ -182,6 +182,7 @@ class Artist(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=False)
 
     # relationships
     tours = db.relationship("Tour", back_populates="artist")
