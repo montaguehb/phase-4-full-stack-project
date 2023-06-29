@@ -104,7 +104,7 @@ class TourByID(Resource):
 
 class Logout(Resource):
     def post(self):
-        session.Logout()
+        session.clear()
         return make_response({}, 202)
 
 

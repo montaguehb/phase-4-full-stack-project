@@ -9,11 +9,20 @@ import { Redirect } from "react-router-dom/cjs/react-router-dom";
 const Login = ({login, updateLogin,updateUser}) => {
   const history = useHistory('/')
   const loginSchema = Yup.object().shape({
-    username: Yup.string()
+    username: Yup
+      .string()
       .min(2, "Invalid username")
       .max(50, "Invalid username")
-      .required("Required"),
-    password: Yup.string().required("Required"),
+      .required("Enter Correct Username")
+      .matches(
+        /^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$/
+      ),
+    password: Yup
+      .string()
+      .required("Enter Correct Password")
+      .matches(
+        /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$/
+      ),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
