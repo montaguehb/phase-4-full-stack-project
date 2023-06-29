@@ -1,8 +1,7 @@
 import { React, useEffect, useState, useContext } from "react";
-import ConcertCard from "./ConcertCard";
 import Footer from "./Footer";
 import { Route, Switch } from "react-router-dom";
-import Clear from "./Logout";
+import Logout from "./Logout";
 import ConcertPage from "./ConcertPage";
 import ConcertList from "./ConcertList";
 
@@ -64,7 +63,7 @@ function App() {
           <Profile sortBy={sortBy} search={search} user={user}/>
         </Route>
         <Route path="/signup">
-          <SignUp login={login} updateLogin={updateLogin}/>
+          <SignUp login={login} updateLogin={updateLogin} method={"POST"}/>
         </Route>
         <Route path="/login">
           <Login login={login} updateLogin={updateLogin} updateUser={updateUser}/>

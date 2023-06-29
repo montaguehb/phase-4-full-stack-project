@@ -5,7 +5,7 @@ import { Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
-const SignUp = ({login, updateLogin}) => {
+const SignUp = ({login, updateLogin, method}) => {
   const signUpSchema = Yup.object().shape({
     username: Yup
       .string()
@@ -41,14 +41,16 @@ const SignUp = ({login, updateLogin}) => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    const resp = await fetch("/signup", {
-      method: "POST",
+    const resp = await fetch(method==="POST"?"/signup":"/profile", {
+      method: method,
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(values),
     });
-    updateLogin(resp.ok)
+    if(method==="POST") {
+      updateLogin(resp.ok)
+    }
   };
 
   return (
@@ -76,7 +78,7 @@ const SignUp = ({login, updateLogin}) => {
                 <Field type="password" name="password" />
                 <ErrorMessage name="password" component="div" />
                 <Button type="submit" disabled={isSubmitting}>
-                  Sign up
+                  {method==="POST"?"Sign up":"Edit Profile"}
                 </Button>
               </Form>
             </Grid.Column>
