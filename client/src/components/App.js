@@ -37,10 +37,10 @@ function App() {
   const handleSortBy = (e) => {
     setSortBy(e.target.textContent);
   };
-
-  const updateLogin = bool => {
+  
+  const updateLogin = (bool) => {
     setLogin(bool)
-  }
+  } 
   
   return (
     <div>
@@ -62,7 +62,7 @@ function App() {
           <SignUp />
         </Route>
         <Route path="/login">
-          <Login />
+          <Login login={login} updateLogin={updateLogin}/>
         </Route>
         <Route exact path="/concerts">
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />

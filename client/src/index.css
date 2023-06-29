@@ -1,0 +1,11 @@
+@media (min-height: 320px) {
+    .ui.footer.form-page { 
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+}
+
+#login {
+    max-width: 50%;
+}
