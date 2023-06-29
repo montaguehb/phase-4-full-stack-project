@@ -5,12 +5,21 @@ import * as Yup from "yup";
 
 const SignUp = () => {
   const signUpSchema = Yup.object().shape({
-    username: Yup.string()
+    username: Yup
+      .string()
+      .required('Please Enter your Username')
       .min(2, "Invalid username")
       .max(50, "Invalid username"),
-    password: Yup.string().required("Required"),
-    email: Yup.string().email().required("Required"),
-    name: Yup.string().required("Required"),
+    password: Yup
+      .string()
+      .required("Please Enter your Password"),
+    email: Yup
+      .string()
+      .email()
+      .required("Please Enter your Email"),
+    name: Yup
+      .string()
+      .required("Please Enter your Name"),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
