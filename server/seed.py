@@ -63,8 +63,15 @@ def make_users():
         db.session.add(User(
             first_name=fake.first_name(),
             username=fake.last_name(),
-            email=fake.email())
+            email=fake.email(),
+            password_hash="password")
         )
+    db.session.add(User(
+        first_name="test",
+        username="test",
+        email="test@test.com",
+        password_hash="hunter2"
+    ))
     db.session.commit()
 
 def make_user_concerts():
