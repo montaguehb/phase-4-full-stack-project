@@ -43,8 +43,9 @@ const Login = ({login, updateLogin}) => {
                 <label>Password:</label>
                 <Field type="password" name="password" />
                 <ErrorMessage name="password" component="div" />
+                <br></br>
                 <Button type="submit" disabled={isSubmitting}>
-                  Submit
+                  Login
                 </Button>
               </Form>
             </Grid.Column>
