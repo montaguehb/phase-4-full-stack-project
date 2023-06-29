@@ -20,7 +20,6 @@ function App() {
   useEffect(() => {
     (async () => {
       const [concert_resp, auth_resp] = await Promise.all([fetch("/concerts"), fetch("/login")]);
-      debugger
       if (concert_resp.ok) {
         setConcerts(await concert_resp.json());
       } else {

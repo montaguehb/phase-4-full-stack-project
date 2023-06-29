@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { Image, Container, Header, Button } from "semantic-ui-react";
 
 function ConcertPage() {
   const [concert, setConcerts] = useState();
-
+  const {id} = useParams()
   useEffect(() => {
     (async () => {
-      const resp = await fetch("/concerts/1");
+      const resp = await fetch(`/concerts/${id}`);
       if (resp.ok) {
         setConcerts(await resp.json());
       } else {
         console.error("Unable to set concerts");
       }
     })();
-  }, []);
+  }, [id]);
 
   return (
     <Container className="middle aligned">
