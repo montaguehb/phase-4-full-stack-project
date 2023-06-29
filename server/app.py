@@ -115,6 +115,19 @@ class Profile(Resource):
                 db.session.get(User, session["user_id"]).to_dict(), 200
             )
 
+    def patch(self):
+        if user := db.session.get(User, session.get("user_id")):
+            for key, value in request.get_json().items():
+                setattr(user, key, value)
+            db.session.add(user)
+            db.session.commit()
+            return make_response(user.to_dict(), 200)
+    
+    def delete(self):
+        if user := db.session.get(User, session.get("user_id")):
+            db.session.delete(user)
+            db.session.commit()
+            return make_response({}, 204)        
 
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")

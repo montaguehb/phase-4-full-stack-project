@@ -1,6 +1,6 @@
 @media (min-height: 320px) {
     .ui.footer.form-page { 
-      position: absolute;
+      position: relative;
       bottom: 0;
       width: 100%;
     }
