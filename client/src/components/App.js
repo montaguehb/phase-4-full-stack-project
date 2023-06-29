@@ -39,8 +39,8 @@ function App() {
     setSortBy(e.target.textContent);
   };
   
-  const updateLogin = () => {
-    setLogin(true)
+  const updateLogin = (bool) => {
+    setLogin(bool)
   } 
 
   const updateUser =(user)=>{

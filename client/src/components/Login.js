@@ -13,16 +13,16 @@ const Login = ({login, updateLogin,updateUser}) => {
       .string()
       .min(2, "Invalid username")
       .max(50, "Invalid username")
-      .required("Enter Correct Username")
-      .matches(
-        /^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$/
-      ),
+      .required("Enter Correct Username"),
+      // .matches(
+      //   /^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$/
+      // ),
     password: Yup
       .string()
       .required("Enter Correct Password")
-      .matches(
-        /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$/
-      ),
+      // .matches(
+      //   /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$/
+      // ),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
