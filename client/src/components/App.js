@@ -15,6 +15,7 @@ function App() {
   const [concerts, setConcerts] = useState([]);
   const [user, setUser] = useState(null)
 
+
   useEffect(() => {
     (async () => {
       const [concert_resp, auth_resp] = await Promise.all([fetch("/concerts"), fetch("/login")]);
@@ -40,6 +41,7 @@ function App() {
 
   const updateUser =(user)=>{
     setUser(user)
+    console.log(user)
   }
   
   return (
