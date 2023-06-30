@@ -5,7 +5,7 @@ import { Button, Container } from "semantic-ui-react";
 
 const Profile = ({ sortBy, search, user }) => {
   const [edit, setEdit] = useState(false);
-  const user_concerts = [user.user_concerts];
+  const user_concerts = [...user.user_concerts];
 
   const deleteUser = async () => {
     const resp = await fetch("/profile", { method: "DELETE" });
@@ -27,7 +27,7 @@ const Profile = ({ sortBy, search, user }) => {
         </Button>
         {edit ? (
           <div>
-            <SignUp method={"PATCH"} />
+            <SignUp method={"PATCH"} user={user}/>
             <p>Current Username:{user.username}</p>
             <p>Current email:{user.email} </p>
           </div>
@@ -50,7 +50,7 @@ const Profile = ({ sortBy, search, user }) => {
           <></>
         )}
 
-        <i class="trash alternate outline icon" onClick={deleteUser}></i> */}
+         */}
 
       {user_concerts.length ? (
         <ConcertList
@@ -61,6 +61,7 @@ const Profile = ({ sortBy, search, user }) => {
       ) : (
         <h1>You Don't Have Any Tickets Yet!</h1>
       )}
+      <i class="trash alternate outline icon" onClick={deleteUser}></i>
     </div>
   );
 };

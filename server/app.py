@@ -114,22 +114,19 @@ class Profile(Resource):
                 db.session.get(User, session["user_id"]).to_dict(), 200
             )
 
-    def post(self):
-        if session.get("user_id"):
+    def post(self):    
             try:
-                r = request.get_json()
-                if not UserConcert.query.filter_by(user_id=session.get("user_id"), concert_id=r["concert_id"]).first():
-                    new_concert = UserConcert(
-                        user_id=session["user_id"],
-                        concert_id=r["concert_id"],
-                    )
-                    updated_ticket = db.session.get(Venue, r["venue_id"])
-                    updated_ticket.capacity -= 1
-                    db.session.add(new_concert, updated_ticket)
-                    db.session.commit()
-                    return make_response(db.session.get(Concert, r["concert_id"]).to_dict(), 200)
-                else:
-                    return make_response({"error": "user alread has that concert"}, 400)
+                if session.get("user_id"):
+                    r = request.get_json()
+                    if not UserConcert.query.filter_by(user_id=session.get("user_id"), concert_id=r["concert_id"]).first():
+                        new_concert = UserConcert(**r)
+                        updated_ticket = db.session.get(Venue, r["venue_id"])
+                        updated_ticket.capacity -= 1
+                        db.session.add(new_concert, updated_ticket)
+                        db.session.commit()
+                        return make_response(db.session.get(Concert, r["concert_id"]).to_dict(), 200)
+                    else:
+                        return make_response({"error": "user alread has that concert"}, 400)
             except Exception as e:
                 return make_response({"error": e}, 400)
 
