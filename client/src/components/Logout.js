@@ -5,7 +5,9 @@ const Logout = ({updateUser}) => {
         const resp = await fetch("/logout", {
             method: "POST"
         })
-        updateUser(resp.ok)
+        if(resp.ok) {
+          updateUser(false)
+        }
     }
   return (
     <Button onClick={handleClick}>Logout</Button>

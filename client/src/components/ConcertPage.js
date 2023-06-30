@@ -30,6 +30,9 @@ function ConcertPage({ user, login }) {
       const data = await resp.json()
       setConcert(data)
     }
+    else {
+      alert("You already have that ticket")
+    }
   };
 
   return (
@@ -60,7 +63,7 @@ function ConcertPage({ user, login }) {
         <p>Artist Description: {concert?.tour?.artist?.description}</p>
       </Grid.Row>
 
-      {user ? (
+      {user && concert?.venue?.capacity? (
         <Grid.Row>
           <Button secondary onClick={handleClick}>Get ticket</Button>
         </Grid.Row>
@@ -69,7 +72,7 @@ function ConcertPage({ user, login }) {
       )}
 
       <Grid.Row>
-        <p>Available Tickets: {concert?.venue?.capacity}</p>
+        {concert?.venue?.capacity?<p>Available Tickets: {concert?.venue?.capacity}</p>:<p>sold out</p>}
       </Grid.Row>
     </Grid>
   );
