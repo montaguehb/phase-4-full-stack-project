@@ -5,8 +5,16 @@ import { Button, Container } from "semantic-ui-react";
 const Profile = ({ sortBy, search, user }) => {
   // const [profile, setProfile] = useState("");
   const [edit, setEdit] = useState(false)
-  
-
+  useEffect(() => {
+    (async () => {
+      const resp = await fetch("/profile");
+      if (resp.ok) {
+        setProfile(await resp.json());
+      } else {
+        console.error("Unable to set concerts");
+      }
+    })();
+  }, []);
 
   const deleteUser = async () => {
     const resp = await fetch("/profile", {method: "DELETE"})

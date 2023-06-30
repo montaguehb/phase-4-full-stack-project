@@ -2,12 +2,12 @@ import React from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Field } from "formik-semantic-ui-react";
 import { Button, Grid } from "semantic-ui-react";
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
-const Login = ({login, updateUser}) => {
-
+const Login = ({login, updateLogin,updateUser}) => {
+  const history = useHistory('/')
   const loginSchema = Yup.object().shape({
     username: Yup
       .string()
@@ -25,7 +25,17 @@ const Login = ({login, updateUser}) => {
       // ),
   });
 
-
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const resp = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    updateLogin(resp.ok)
+    history.push('/')
+  };
 
   return (
     <div>
@@ -33,7 +43,7 @@ const Login = ({login, updateUser}) => {
       <Formik
         initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}
-        onSubmit={updateUser}
+        onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
           <Grid id="login" verticalAlign="middle" columns={1} centered>
