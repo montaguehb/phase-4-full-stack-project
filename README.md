@@ -1,16 +1,34 @@
-# 🎫**FlatTicket**(we can totally change this name)🎫 
+# 🎫**FlatTicket**(we can totally change this name)🎫
+
 <sub>🎹A project By: Historia Montague, Jay Lim, and Nolan Nash🎹</sub>
 
 ## 👨‍🎤Project Overview👩‍🎤
-Welcome to FlatTicket. Our application 
+
+Welcome to FlatTicket. An application allowing users to view a wide variety of music tours as well as buy tickets for those tours and a variety of other exciting features.
 
 ---
 
 ## 🎛️Installation and Usage🎛️
 
+The first step to installing and using our application is to fork and clone the directory from github into your local environment
+
+### 🎼**Back End (Do this First)**🎼
+
+1. Once inside your local environment, CD into the server folder and run `pipenv install`
+2. Run FLASK_APP=app.py in your terminal
+3. Run `flask db init` followed by: `flask db migrate` and finally `flask db upgrade` to create your database and tables
+4. still inside the server folder run `python seed.py` to seed your tables with data from Faker
+5. In a new terminal (still inside server folder) run `pipenv shell` followed by `flask run` to start your server.
+6. A complete list of packages used in the project is included below in case of missing modules
+    1.  To fix a missing module simply run `pip install <module name>`
+7. Now your back end server is up running, its time to get the front end up and running as well.
+
 ### 🎶**Front End**🎶
 
-### 🎼**Back End**🎼
+* In a new terminal cd into the client folder and run `npm install`
+* In the same terminal enter `npm start`
+  * If any errors relating to missing modules appear running `npm i` may solve the problem.
+  * If the problem persists check the terminal and install and specific packeges noted as missing.
 
 ---
 
@@ -18,11 +36,48 @@ Welcome to FlatTicket. Our application
 
 ### 🎶**Front End**🎶
 
+* Full auth with login/logout + persistance in profile data
+* Full CRUD on user profiles
+* Each card is populated with information seeded from the database and is able to direct users to various routes.
+* Functional search bar with drop down allows users to find concerts based on different parameters
+
 ### 🎼**Back End**🎼
+
+* config.py file used to configure database
+* hashing done for user passwords
+* full CRUD on users. 
 
 ---
 
-## 🔊Licensing, Acknolwedgements, Extras and Socials🔊
+## 🔊Licensing, Packages and Socials🔊
+
+### PACKAGES USED
+
+
+* Node Modules
+  * formik
+    * formik-semantic-ui-react
+  * semantic ui
+  * react
+    * react-scripts
+    * react-dom
+    * react-router-dom
+  * yup
+  * web-vitals
+
+
+* Python Packages
+  * faker
+  * flask
+    * flask-migrate
+    * flask-sqlalchemy
+    * flask-cors
+    * flask-restful
+    * flask-bcrpyt
+  * sqlalchemy-serializer
+  * importlib
+    * importlib-metadata
+    * importlib-resources
 
 ### 📻**Licensing**📻
 
@@ -38,11 +93,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ---
 
-### 🥁**Acknowledgements, and additional resources**🥁
-
-* not sure if we will end up needing this
-* but if we do its here
-
 ### 🎧🎤🎧**Socials, Contact, Blogs**🎧🎤🎧
 
 * Historia:
@@ -51,11 +101,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   * Add others if you want
 
 * Jay:
-  * Github:
+
   * Blog
   * Others
 
 * Nolan:
-  * Github:
-  * Blog
-  * other
+
+  * [Blog](https://nolan.hashnode.dev/)
+
