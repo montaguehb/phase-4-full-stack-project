@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import ConcertList from "./ConcertList";
 import SignUp from "./SignUp";
 import { Button, Container } from "semantic-ui-react";
-const Profile = ({ sortBy, search, user }) => {
+const Profile = ({ sortBy, search, user}) => {
   // const [profile, setProfile] = useState("");
   const [edit, setEdit] = useState(false)
-  useEffect(() => {
-    (async () => {
-      const resp = await fetch("/profile");
-      if (resp.ok) {
-        setProfile(await resp.json());
-      } else {
-        console.error("Unable to set concerts");
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const resp = await fetch("/profile");
+  //     if (resp.ok) {
+  //       updateUser(await resp.json());
+  //     } else {
+  //       console.error("Unable to set user");
+  //     }
+  //   })();
+  // }, []);
 
   const deleteUser = async () => {
     const resp = await fetch("/profile", {method: "DELETE"})
@@ -22,6 +22,7 @@ const Profile = ({ sortBy, search, user }) => {
       console.log("user deleted")
     }
   } 
+
   return (
     <div>
       <Container centered>

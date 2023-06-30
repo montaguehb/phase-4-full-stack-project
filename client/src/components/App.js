@@ -62,7 +62,7 @@ function App() {
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/profile">
-          <Profile sortBy={sortBy} search={search} user={user}/>
+          <Profile sortBy={sortBy} search={search} user={user} updateUser={updateUser}/>
         </Route>
         <Route path="/signup">
           <SignUp login={login} updateLogin={updateLogin} method={"POST"}/>
