@@ -57,7 +57,7 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, login, updateLo
           ></Input>
         </Menu.Item>
         <Menu.Item>
-          {user ? (
+          {login ? (
             <Link to="/profile">
               <Button primary>Profile</Button>
             </Link>
@@ -67,7 +67,7 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, login, updateLo
             </Link>
           )}
         </Menu.Item>
-        {user?<Menu.Item><Logout updateUser={updateUser}/></Menu.Item>:<></>}
+        {login?<Menu.Item><Logout updateLogin={updateLogin}/></Menu.Item>:<></>}
       </Menu.Menu>
     </Menu>
   );

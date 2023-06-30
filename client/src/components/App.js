@@ -1,6 +1,6 @@
 import { React, useEffect, useState, useContext } from "react";
 import Footer from "./Footer";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Logout from "./Logout";
 import ConcertPage from "./ConcertPage";
 import ConcertList from "./ConcertList";
@@ -14,21 +14,8 @@ function App() {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [concerts, setConcerts] = useState([]);
+  const [login, setLogin] = useState(false);
   const [user, setUser] = useState(null)
-  const history = useHistory('/')
-
-  const handleLogin = async (values, { setSubmitting }) => {
-    const resp = await fetch("/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    if (resp.ok) {
-      updateUser(await resp.json())
-    }
-  };
 
   useEffect(() => {
     (async () => {
@@ -38,9 +25,7 @@ function App() {
       } else {
         console.error("Unable to set concerts");
       }
-      if (auth_resp.ok) {
-        updateUser(await auth_resp.json())
-      }
+      setLogin(auth_resp.ok)
     })();
   }, []);
 
@@ -52,6 +37,10 @@ function App() {
   const handleSortBy = (e) => {
     setSortBy(e.target.textContent);
   };
+  
+  const updateLogin = () => {
+    setLogin(val => !val)
+  } 
 
   const updateUser =(user)=>{
     setUser(user)
@@ -61,7 +50,7 @@ function App() {
     <div>
       <Nav
         search={search}
-        updateUser={updateUser}
+        updateLogin={updateLogin}
         handleSearchChange={handleSearchChange}
         handleSortBy={handleSortBy}
         login={login}
@@ -73,19 +62,19 @@ function App() {
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/profile">
-          <Profile sortBy={sortBy} search={search} user={user}/>
+          <Profile sortBy={sortBy} search={search} user={user} updateUser={updateUser}/>
         </Route>
         <Route path="/signup">
-          <SignUp user={user} updateUser={updateUser} method={"POST"}/>
+          <SignUp login={login} updateLogin={updateLogin} method={"POST"}/>
         </Route>
         <Route path="/login">
-          <Login user={user} handleLogin={handleLogin} updateUser={updateUser}/>
+          <Login login={login} updateLogin={updateLogin} updateUser={updateUser}/>
         </Route>
         <Route exact path="/concerts">
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
         <Route path="/concerts/:id">
-          <ConcertPage user={user}/>
+          <ConcertPage user={user} login={login}/>
         </Route>
       </Switch>
       <Footer />
