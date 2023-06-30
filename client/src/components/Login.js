@@ -33,7 +33,10 @@ const Login = ({login, updateLogin,updateUser}) => {
       },
       body: JSON.stringify(values),
     });
-    updateLogin(resp.ok)
+    if(resp.ok) {
+      updateUser(await resp.json())
+    }
+    
     history.push('/')
   };
 
