@@ -25,7 +25,7 @@ const Login = ({login, updateLogin,updateUser}) => {
       // ),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const resp = await fetch("/login", {
       method: "POST",
       headers: {
@@ -33,16 +33,19 @@ const Login = ({login, updateLogin,updateUser}) => {
       },
       body: JSON.stringify(values),
     });
-    console.log(resp)
-    updateUser(resp.ok)
-    updateLogin(resp.ok)
-    
-    history.push('/')
-  };
+    if(resp.ok) {
+      const data = await resp.json()
+      updateUser(data)
+      resetForm();
+    }
+    else {
+      alert("Incorrect Username or Password!")
+    }        
+ };
 
   return (
     <div>
-      {login?<Redirect to="/profile" />:<h1>Login</h1>}
+      {login?<Redirect to="/" />:<h1>Login</h1>}
       <Formik
         initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}

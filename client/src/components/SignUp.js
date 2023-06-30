@@ -39,19 +39,21 @@ const SignUp = ({login, updateLogin, method,edit}) => {
       //   /[A-Z][a-z]*/
       // ),
   });
+  
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    const resp = await fetch(method==="POST"?"/signup":"/profile", {
-      method: method,
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    if(method==="POST") {
-      updateLogin(resp.ok)
-      reuturn(<Redirect to='/'></Redirect>)
-    }
+      const resp = await fetch(method==="POST"?"/signup":"/profile", {
+        method: method,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if(method==="POST") {
+        updateLogin(resp.ok)
+        alert("SignUp Successful!")
+      }
+    resetForm();
   };
 
   const handle_form_title = () =>{
@@ -70,7 +72,11 @@ const SignUp = ({login, updateLogin, method,edit}) => {
     <div>
       {handle_form_title()}
       <Formik
-        initialValues={{ name: "", email: "", username: "", password: "" }}
+        initialValues={{ name: "",
+          email: "",
+          username: "",
+          password: ""
+        }}
         validationSchema={signUpSchema}
         onSubmit={handleSubmit}
       >
