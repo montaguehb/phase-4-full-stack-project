@@ -5,7 +5,7 @@ import { Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
-const SignUp = ({login, updateLogin, method}) => {
+const SignUp = ({login, updateUser, method}) => {
   const signUpSchema = Yup.object().shape({
     username: Yup
       .string()
@@ -48,8 +48,8 @@ const SignUp = ({login, updateLogin, method}) => {
       },
       body: JSON.stringify(values),
     });
-    if(method==="POST") {
-      updateLogin(resp.ok)
+    if(method==="POST" && resp.ok) {
+      updateUser(await resp.json())
     }
   };
 

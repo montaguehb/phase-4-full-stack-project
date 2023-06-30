@@ -1,11 +1,13 @@
 import React from 'react'
 import { Button }  from "semantic-ui-react"
-const Logout = ({updateLogin}) => {
+const Logout = ({updateUser}) => {
     const handleClick = async () => {
         const resp = await fetch("/logout", {
             method: "POST"
         })
-        updateLogin(resp.ok)
+        if(resp.ok) {
+          updateUser(false)
+        }
     }
   return (
     <Button onClick={handleClick}>Logout</Button>

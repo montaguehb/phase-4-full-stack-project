@@ -7,6 +7,7 @@ const Profile = ({ sortBy, search, user }) => {
   const [edit, setEdit] = useState(false)
   
 
+
   const deleteUser = async () => {
     const resp = await fetch("/profile", {method: "DELETE"})
     if (resp.ok) {
