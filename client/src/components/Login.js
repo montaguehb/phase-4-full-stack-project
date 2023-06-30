@@ -33,7 +33,6 @@ const Login = ({login, updateLogin,updateUser}) => {
       },
       body: JSON.stringify(values),
     });
-
     if(resp.ok) {
       const data = await resp.json()
       updateUser(data)
