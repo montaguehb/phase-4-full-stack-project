@@ -118,7 +118,7 @@ class Profile(Resource):
         if session.get("user_id"):
             try:
                 r = request.get_json()
-                if UserConcert.query.filter(UserConcert.user_id==session.get("user_id"), UserConcert.concert_id==)
+                if not UserConcert.query.filter_by(user_id=session.get("user_id"), concert_id=r["concert_id"]).first():
                     new_concert = UserConcert(
                         user_id=session["user_id"],
                         concert_id=r["concert_id"],
@@ -129,7 +129,7 @@ class Profile(Resource):
                     db.session.commit()
                     return make_response(db.session.get(Concert, r["concert_id"]).to_dict(), 200)
                 else:
-                    raise ValueError("User already has that concert")
+                    return make_response({"error": "user alread has that concert"}, 400)
             except Exception as e:
                 return make_response({"error": e}, 400)
 
