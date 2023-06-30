@@ -28,7 +28,8 @@ The first step to installing and using our application is to fork and clone the 
 * In a new terminal cd into the client folder and run `npm install`
 * In the same terminal enter `npm start`
   * If any errors relating to missing modules appear running `npm i` may solve the problem.
-  * If the problem persists check the terminal and install and specific packeges noted as missing.
+  * If the problem persists check the terminal and install and specific packeges noted as missing
+  * Please note in the backend, you need to protect your secrect key to protect your user data
 
 ---
 
@@ -50,7 +51,12 @@ The first step to installing and using our application is to fork and clone the 
 * hashing done for user passwords
 
 * full CRUD on users
+ 
+
+
+* full CRUD on users
 * form validation and errors with formik
+
 
 
 ---
