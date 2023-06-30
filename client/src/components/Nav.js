@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Input, Menu, Header, Button, Dropdown } from "semantic-ui-react";
 import Logout from "./Logout"
-const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUser}) => {
+
+const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, login, updateLogin,user}) => {
+
   const options = [
     {
       key: "name",
@@ -35,6 +37,9 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUse
           <Menu.Item name="home" />
         </Link>
       </Menu.Menu>
+      <Menu.Item position="right">
+        <h2>The number one Place For Concert Tickets!</h2>
+      </Menu.Item>
       <Menu.Menu position="right">
         <Dropdown
           selection

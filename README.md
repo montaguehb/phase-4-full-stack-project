@@ -1,4 +1,4 @@
-# 🎫**FlatTicket**(we can totally change this name)🎫
+# 🎫**FlatTicket**🎫
 
 <sub>🎹A project By: Historia Montague, Jay Lim, and Nolan Nash🎹</sub>
 
@@ -49,15 +49,7 @@ The first step to installing and using our application is to fork and clone the 
 
 * config.py file used to configure database
 * hashing done for user passwords
-
-* full CRUD on users
- 
-
-
-* full CRUD on users
-* form validation and errors with formik
-
-
+* full CRUD on users. 
 
 ---
 

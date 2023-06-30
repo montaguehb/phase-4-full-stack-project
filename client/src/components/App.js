@@ -64,8 +64,10 @@ function App() {
         updateUser={updateUser}
         handleSearchChange={handleSearchChange}
         handleSortBy={handleSortBy}
+        login={login}
         user={user}
       />
+          
       <Switch>
         <Route exact path="/">
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
