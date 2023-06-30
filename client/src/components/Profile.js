@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ConcertList from "./ConcertList";
 import SignUp from "./SignUp";
 import { Button, Container } from "semantic-ui-react";
+
 const Profile = ({ sortBy, search, user}) => {
   // const [profile, setProfile] = useState("");
   const [edit, setEdit] = useState(false)
@@ -15,6 +16,7 @@ const Profile = ({ sortBy, search, user}) => {
   //     }
   //   })();
   // }, []);
+
 
   const deleteUser = async () => {
     const resp = await fetch("/profile", {method: "DELETE"})
