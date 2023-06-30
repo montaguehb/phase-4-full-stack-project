@@ -18,12 +18,12 @@
     "yup": "^1.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true SSL_CRT_FILE='./.cert/cert.pem' SSL_KEY_FILE='./.cert/key.pem' react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",
