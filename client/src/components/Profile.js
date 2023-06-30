@@ -5,6 +5,7 @@ import { Button } from "semantic-ui-react";
 const Profile = ({ sortBy, search }) => {
   const [profile, setProfile] = useState("");
   const [edit, setEdit] = useState(false)
+  
   useEffect(() => {
     (async () => {
       const resp = await fetch("/profile");
