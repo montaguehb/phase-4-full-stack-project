@@ -8,9 +8,11 @@ from config import app, db, api
 # Local imports
 from models import Concert, Venue, Artist, User, Tour, UserConcert
 
+
 class Artists(Resource):
     def get(self):
         return make_response([artist.to_dict() for artist in Artist.query.all()], 200)
+
 
 class ArtistsById(Resource):
     def get(self):
@@ -111,17 +113,23 @@ class Profile(Resource):
             return make_response(
                 db.session.get(User, session["user_id"]).to_dict(), 200
             )
-    def post(self,concert_id):
-        if session.get('user_id') and session.get('concert_id'):
+
+    def post(self):
+        if session.get("user_id"):
             try:
-                r = request.json()
-                new_concert = UserConcert(
-                    user_id = r[self.id],
-                    concert_id = r[concert_id],
-                )
-                db.session.add(new_concert)
-                db.session.commit()
-                return make_response(new_concert.to_dict(),200)
+                r = request.get_json()
+                if UserConcert.query.filter(UserConcert.user_id==session.get("user_id"), UserConcert.concert_id==)
+                    new_concert = UserConcert(
+                        user_id=session["user_id"],
+                        concert_id=r["concert_id"],
+                    )
+                    updated_ticket = db.session.get(Venue, r["venue_id"])
+                    updated_ticket.capacity -= 1
+                    db.session.add(new_concert, updated_ticket)
+                    db.session.commit()
+                    return make_response(db.session.get(Concert, r["concert_id"]).to_dict(), 200)
+                else:
+                    raise ValueError("User already has that concert")
             except Exception as e:
                 return make_response({"error": e}, 400)
 
@@ -132,12 +140,13 @@ class Profile(Resource):
             db.session.add(user)
             db.session.commit()
             return make_response(user.to_dict(), 200)
-    
+
     def delete(self):
         if user := db.session.get(User, session.get("user_id")):
             db.session.delete(user)
             db.session.commit()
-            return make_response({}, 204)        
+            return make_response({}, 204)
+
 
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")

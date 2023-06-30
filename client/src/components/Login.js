@@ -34,14 +34,14 @@ const Login = ({login, updateLogin,updateUser}) => {
         },
         body: JSON.stringify(values),
       });
-      updateLogin(resp.ok)
+      if(resp.ok) {
+        const data = await resp.json()
+        updateUser(data)
+      }
       history.push('/')
-      alert("Login Successful!")
-
     } catch(e) {
       alert("Login Failed!")
     }
-
   };
 
   return (
