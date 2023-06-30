@@ -46,7 +46,7 @@ const Login = ({login, updateLogin,updateUser}) => {
 
   return (
     <div>
-      {login?<Redirect to="/profile" />:<h1>Login</h1>}
+      {login?<Redirect to="/" />:<h1>Login</h1>}
       <Formik
         initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}

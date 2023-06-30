@@ -41,7 +41,7 @@ const SignUp = ({login, updateLogin, method}) => {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
+
       const resp = await fetch(method==="POST"?"/signup":"/profile", {
         method: method,
         headers: {
@@ -51,11 +51,8 @@ const SignUp = ({login, updateLogin, method}) => {
       });
       if(method==="POST") {
         updateLogin(resp.ok)
+        alert("SignUp Successful!")
       }
-      alert("SignUp Successful!")
-    } catch (e) {
-      alert("SignUp Failed!")
-    }
     resetForm();
   };
 
