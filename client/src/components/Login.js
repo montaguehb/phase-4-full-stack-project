@@ -25,7 +25,7 @@ const Login = ({login, updateLogin,updateUser}) => {
       // ),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const resp = await fetch("/login", {
       method: "POST",
       headers: {
@@ -35,6 +35,7 @@ const Login = ({login, updateLogin,updateUser}) => {
     });
     updateLogin(resp.ok)
     history.push('/')
+    resetForm();
   };
 
   return (
