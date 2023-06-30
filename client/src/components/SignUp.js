@@ -41,15 +41,20 @@ const SignUp = ({login, updateLogin, method}) => {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    const resp = await fetch(method==="POST"?"/signup":"/profile", {
-      method: method,
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    if(method==="POST") {
-      updateLogin(resp.ok)
+    try {
+      const resp = await fetch(method==="POST"?"/signup":"/profile", {
+        method: method,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if(method==="POST") {
+        updateLogin(resp.ok)
+      }
+      alert("SignUp Successful!")
+    } catch (e) {
+      alert("SignUp Failed!")
     }
     resetForm();
   };
