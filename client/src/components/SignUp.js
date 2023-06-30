@@ -5,7 +5,7 @@ import { Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
-const SignUp = ({login, updateLogin, method}) => {
+const SignUp = ({login, updateLogin, method,edit}) => {
   const signUpSchema = Yup.object().shape({
     username: Yup
       .string()
@@ -39,25 +39,44 @@ const SignUp = ({login, updateLogin, method}) => {
       //   /[A-Z][a-z]*/
       // ),
   });
+  
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    const resp = await fetch(method==="POST"?"/signup":"/profile", {
-      method: method,
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    if(method==="POST") {
-      updateLogin(resp.ok)
-    }
+      const resp = await fetch(method==="POST"?"/signup":"/profile", {
+        method: method,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if(method==="POST") {
+        updateLogin(resp.ok)
+        alert("SignUp Successful!")
+      }
+    resetForm();
   };
+
+  const handle_form_title = () =>{
+    if(login == true){
+      return (<Redirect to='/'></Redirect>)
+    }
+    else if (edit == true){
+      return (<h1>Edit Profile</h1>)
+    }
+    else{
+      return (<h1>Signup</h1>)
+    }
+  }
 
   return (
     <div>
-      {login?<Redirect to="/profile" />:<h1>Signup</h1>}
+      {handle_form_title()}
       <Formik
-        initialValues={{ name: "", email: "", username: "", password: "" }}
+        initialValues={{ name: "",
+          email: "",
+          username: "",
+          password: ""
+        }}
         validationSchema={signUpSchema}
         onSubmit={handleSubmit}
       >
