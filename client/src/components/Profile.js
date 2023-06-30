@@ -27,24 +27,24 @@ const Profile = ({ sortBy, search, user}) => {
         <h2 style={{alignItems : 'center',}}>Welcome: {user.first_name} to your Concert Page!</h2><Button primary onClick={() => setEdit(!edit)}>edit</Button>
         {edit?<div><SignUp method={"PATCH"}/><p>Current Username:{user.username}</p>
         <p>Current email:{user.email} </p></div>:<></>}
-
-//       <Container centered>
-//         <h2>Welcome: {user.name} to your Concert Page!</h2>
-//         <Button primary onClick={() => setEdit(!edit)}>
-//           edit
-//         </Button>
-//         {edit ? (
-//           <div>
-//             <SignUp method={"PATCH"} />
-//             <p>Current Username:{user.username}</p>
-//             <p>Current email:{user.email} </p>
-//           </div>
-//         ) : (
-//           <></>
-//         )}
-
-        <i class="trash alternate outline icon" onClick={deleteUser}></i>
       </Container>
+       {/* <Container centered>
+         <h2>Welcome: {user.name} to your Concert Page!</h2>
+         <Button primary onClick={() => setEdit(!edit)}>
+           edit
+         </Button>
+         {edit ? (
+          <div>
+            <SignUp method={"PATCH"} />
+            <p>Current Username:{user.username}</p>
+            <p>Current email:{user.email} </p>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <i class="trash alternate outline icon" onClick={deleteUser}></i> */}
+
         {user_concerts.length ? (<ConcertList
             concerts={user_concerts.map((concert) => concert.concert)}
             sortBy={sortBy}

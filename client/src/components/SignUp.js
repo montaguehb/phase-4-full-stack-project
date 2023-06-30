@@ -40,8 +40,8 @@ const SignUp = ({login, updateLogin, method}) => {
       // ),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+
       const resp = await fetch(method==="POST"?"/signup":"/profile", {
         method: method,
         headers: {
@@ -51,18 +51,20 @@ const SignUp = ({login, updateLogin, method}) => {
       });
       if(method==="POST") {
         updateLogin(resp.ok)
+        alert("SignUp Successful!")
       }
-      alert("SignUp Successful!")
-    } catch (e) {
-      alert("SignUp Failed!")
-    }
+    resetForm();
   };
 
   return (
     <div>
       {login?<Redirect to="/profile" />:<h1>Signup</h1>}
       <Formik
-        initialValues={{ name: "", email: "", username: "", password: "" }}
+        initialValues={{ name: "",
+          email: "",
+          username: "",
+          password: ""
+        }}
         validationSchema={signUpSchema}
         onSubmit={handleSubmit}
       >

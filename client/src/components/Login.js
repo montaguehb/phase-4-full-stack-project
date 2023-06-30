@@ -25,28 +25,28 @@ const Login = ({login, updateLogin,updateUser}) => {
       // ),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      const resp = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      if(resp.ok) {
-        const data = await resp.json()
-        updateUser(data)
-      }
-      history.push('/')
-    } catch(e) {
-      alert("Login Failed!")
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    const resp = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if(resp.ok) {
+      const data = await resp.json()
+      updateUser(data)
+      resetForm();
     }
-  };
+    else {
+      alert("Incorrect Username or Password!")
+    }        
+ };
 
   return (
     <div>
-      {login?<Redirect to="/profile" />:<h1>Login</h1>}
+      {login?<Redirect to="/" />:<h1>Login</h1>}
       <Formik
         initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}
