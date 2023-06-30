@@ -26,15 +26,22 @@ const Login = ({login, updateLogin,updateUser}) => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    const resp = await fetch("/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    updateLogin(resp.ok)
-    history.push('/')
+    try {
+      const resp = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      updateLogin(resp.ok)
+      history.push('/')
+      alert("Login Successful!")
+
+    } catch(e) {
+      alert("Login Failed!")
+    }
+
   };
 
   return (
