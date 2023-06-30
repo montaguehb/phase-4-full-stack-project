@@ -8,9 +8,15 @@ const Profile = ({ sortBy, search, user}) => {
   const [edit, setEdit] = useState(false)
   const user_concerts = [user.user_concerts]
   const deleteUser = async () => {
-    const resp = await fetch("/profile", { method: "DELETE" });
-    if (resp.ok) {
-      console.log("user deleted");
+    try {
+      const resp = await fetch("/profile", {method: "DELETE"})
+      if (resp.ok) {
+        console.log("user deleted")
+      }
+      alert("Delete Successful!")
+
+    } catch(e) {
+      alert("Delete Unsuccessful!")
     }
   };
 
