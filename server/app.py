@@ -147,15 +147,22 @@ class Profile(Resource):
 
 api.add_resource(Concerts, "/concerts")
 api.add_resource(ConcertById, "/concerts/<int:id>")
+
 api.add_resource(Tours, "/tours")
 api.add_resource(TourByID, "/tours/<int:id>")
+
 api.add_resource(Venues, "/venues")
 api.add_resource(VenuesByID, "/venues/<int:id>")
+
 api.add_resource(Artists, "/artists")
 api.add_resource(ArtistsById, "/artists/<int:id>")
+
 api.add_resource(Login, "/login")
+
 api.add_resource(Signup, "/signup")
+
 api.add_resource(Logout, "/logout")
+
 api.add_resource(Profile, "/profile")
 
 if __name__ == "__main__":

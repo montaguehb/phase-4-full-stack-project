@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Field } from "formik-semantic-ui-react";
 import { Button, Container, Grid } from "semantic-ui-react";
@@ -79,21 +79,27 @@ const SignUp = ({ user, updateLogin, method, edit }) => {
         >
           {({ isSubmitting }) => (
             <Form>
+
               <label>Name:</label>
               <Field type="text" name="name" />
               <ErrorMessage name="name" component="div" />
+
               <label>Username:</label>
               <Field type="text" name="username" />
               <ErrorMessage name="username" component="div" />
+
               <label>Email:</label>
               <Field type="email" name="email" />
               <ErrorMessage name="email" component="div" />
+
               <label>Password:</label>
               <Field type="password" name="password" />
               <ErrorMessage name="password" component="div" />
+
               <Button type="submit" disabled={isSubmitting}>
                 {method === "POST" ? "Sign up" : "Edit Profile"}
               </Button>
+
             </Form>
           )}
         </Formik>

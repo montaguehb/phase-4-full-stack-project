@@ -8,13 +8,11 @@ import 'semantic-ui-css/semantic.min.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-// going to leave strict mode on for now...
+
   <React.StrictMode>
-{/* context goes here */}
     <Router>
       <App />
     </Router>
-{/* context goes here */}
   </React.StrictMode>
 );
 
