@@ -1,13 +1,9 @@
-# Remote library imports
 from sqlalchemy.orm import validates
-
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 from config import db, bcrypt
-
 import re
-
 
 class UserConcert(db.Model, SerializerMixin):
     __tablename__ = "user_concerts"
@@ -22,9 +18,10 @@ class UserConcert(db.Model, SerializerMixin):
 
     # serializations
     serialize_rules = ("-user.user_concerts", "-concert.user_concerts")
-    # validations
-    # other methods
-
+    
+        # other methods
+    def __repr__(self):
+        return f"<UserConcert: {self.id} \nUser: {self.user.id} \n Concert: {self.concert.id}>"
 
 class Concert(db.Model, SerializerMixin):
     __tablename__ = "concerts"
@@ -33,7 +30,6 @@ class Concert(db.Model, SerializerMixin):
     date = db.Column(db.DateTime)
     venue_id = db.Column(db.Integer, db.ForeignKey("venues.id"))
     tour_id = db.Column(db.Integer, db.ForeignKey("tours.id"))
-
     name = db.Column(db.String)
 
     # relationships
@@ -44,15 +40,15 @@ class Concert(db.Model, SerializerMixin):
 
     # serialization
     serialize_rules = ("-users", "-venue.concerts", "-tour.concerts", "-user_concerts")
-
-    # validations
-
+    
+    # other methods
+    def __repr__(self):
+        return f"<Concert: {self.id}>"
 
 class Venue(db.Model, SerializerMixin):
     __tablename__ = "venues"
 
     id = db.Column(db.Integer, primary_key=True)
-    # ? should we make name something like VARCHAR so the name can have hyphons and apostophies?
     name = db.Column(db.String, nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
     location = db.Column(db.VARCHAR, nullable=False)
@@ -60,12 +56,10 @@ class Venue(db.Model, SerializerMixin):
     # relationships
     concerts = db.relationship("Concert", back_populates="venue")
 
-    # serializations
-
     # validations
     @validates("name")
     def validate_name(self, key, name):
-        # ? should think about implementing regex or not
+
         if not name:
             raise ValueError("Venue needs a name, 2-20 characters in length")
         return name
@@ -78,7 +72,6 @@ class Venue(db.Model, SerializerMixin):
 
     @validates("location")
     def validate_location(self, key, location):
-        # ? not sure how we want to format our location... as an address or what, for now assuming is a city string
         if not location:
             raise ValueError("Location is required")
         return location
@@ -86,7 +79,6 @@ class Venue(db.Model, SerializerMixin):
     # other methods
     def __repr__(self):
         return f"<Venue: {self.id} \n Venue Name: {self.name}>"
-
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
@@ -126,7 +118,7 @@ class User(db.Model, SerializerMixin):
 
     # @validates("email")
     # def validate_email(self, _, email):
-    #     # ? this one is going to need more work than others...
+
     #     email_regex = "[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}"
     #     email_regex = re.compile(email)
     #     if not email or not re.fullmatch(email_regex, email):
@@ -134,6 +126,8 @@ class User(db.Model, SerializerMixin):
     #     return email
 
     # other methods
+
+    def __repr__(self):
 
     @hybrid_property
     def password_hash(self):
@@ -148,7 +142,7 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(self._password_hash, password.encode("utf-8"))
 
     def __repr__(self):
-        return f"<user: {self.id} \nname: {self.name}>"
+        return f"<user: {self.id} \nname: {self.first_name}>"
 
 
 class Tour(db.Model, SerializerMixin):
@@ -162,8 +156,6 @@ class Tour(db.Model, SerializerMixin):
     # relationships
     artist = db.relationship("Artist", back_populates="tours")
     concerts = db.relationship("Concert", back_populates="tour")
-
-    # serializations
 
     # validations
     @validates("name")

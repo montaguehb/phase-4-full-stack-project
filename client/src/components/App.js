@@ -24,6 +24,7 @@ function App() {
       } else {
         console.error("Unable to set concerts");
       }
+
       if (auth_resp.ok) {
         setUser(await auth_resp.json())
       }
@@ -31,7 +32,6 @@ function App() {
   }, []);
 
   const handleSearchChange = (e) => {
-    // todo add yup validations to search
     setSearch(e.target.value);
   };
 
@@ -41,9 +41,8 @@ function App() {
 
   const updateUser =(user)=>{
     setUser(user)
-    console.log(user)
   }
-  
+
   return (
     <div>
       <Nav
@@ -53,26 +52,33 @@ function App() {
         handleSortBy={handleSortBy}
         user={user}
       />
-          
+
       <Switch>
+
         <Route exact path="/">
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
+
         <Route path="/profile">
           <Profile sortBy={sortBy} search={search} user={user} updateUser={updateUser}/>
         </Route>
+
         <Route path="/signup">
           <SignUp user={user} updateUser={updateUser} method={"POST"}/>
         </Route>
+
         <Route path="/login">
           <Login user={user} updateUser={updateUser}/>
         </Route>
+
         <Route exact path="/concerts">
           <ConcertList concerts={concerts} search={search} sortBy={sortBy} />
         </Route>
+
         <Route path="/concerts/:id">
           <ConcertPage user={user}/>
         </Route>
+
       </Switch>
       <Footer />
     </div>
