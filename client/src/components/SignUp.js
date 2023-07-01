@@ -1,11 +1,11 @@
 import React from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Field } from "formik-semantic-ui-react";
-import { Button, Container, Grid } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
-const SignUp = ({ user, updateLogin, method, edit }) => {
+const SignUp = ({ user, updateUser, method, edit }) => {
   const history = useHistory();
 
   const signUpSchema = Yup.object().shape({
@@ -44,9 +44,10 @@ const SignUp = ({ user, updateLogin, method, edit }) => {
       },
       body: JSON.stringify(values),
     });
-    if (method === "POST") {
-      updateLogin(resp.ok);
-      alert("SignUp Successful!");
+    if (method === "POST" && resp.ok) {
+      const data = await resp.json()
+      updateUser(data)
+      history.push("/concerts")
     }
     resetForm();
   };

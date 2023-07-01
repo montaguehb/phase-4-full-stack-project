@@ -18,9 +18,7 @@ const Login = ({ login, updateLogin, updateUser }) => {
         "Username must be only letters and numbers with no spaces"
       )
       .required("Please enter a username between 2 and 20 characters"),
-    password: Yup.string()
-      .required("Enter Correct Password")
-
+    password: Yup.string().required("Enter Correct Password"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -34,28 +32,25 @@ const Login = ({ login, updateLogin, updateUser }) => {
     if (resp.ok) {
       const data = await resp.json();
       updateUser(data);
-      resetForm();
+      history.push("/concerts")
     } else {
       alert("Incorrect Username or Password!");
-    }      
-};
+    }
+  };
 
   return (
     <div>
-      {login?<Redirect to="/" />:<h1>Login</h1>}
+      {login ? <Redirect to="/" /> : <h1>Login</h1>}
 
       <Formik
         initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}
         onSubmit={handleSubmit}
       >
-
         {({ isSubmitting }) => (
           <Grid id="login" verticalAlign="middle" columns={1} centered>
-
             <Grid.Column>
               <Form>
-
                 <label>Username:</label>
                 <Field type="text" name="username" />
                 <ErrorMessage name="username" component="div" />
@@ -68,7 +63,6 @@ const Login = ({ login, updateLogin, updateUser }) => {
                 <Button type="submit" disabled={isSubmitting}>
                   Login
                 </Button>
-
               </Form>
             </Grid.Column>
           </Grid>

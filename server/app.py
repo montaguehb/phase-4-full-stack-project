@@ -52,16 +52,16 @@ class VenuesByID(Resource):
 
 class Login(Resource):
     def post(self):
-        req = request.get_json()
-
-        username_regex = "^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$"
-        username_regex = re.compile(username_regex)
-        if re.fullmatch(username_regex, req.get("username")):
-            if user := User.query.filter(User.username == req.get("username")).first():
-                if user.authenticate(req.get("password")):
-                    session["user_id"] = user.id
-                    return make_response(user.to_dict(), 200)
-        return make_response({"error": "user not authorized"}, 403)
+        try:
+            req = request.get_json()
+            if 2 <= len(req.get("username")) <= 20 and re.match("^[a-zA-Z0-9]*$", req.get("username")):
+                if user := User.query.filter(User.username == req.get("username")).first():
+                    if user.authenticate(req.get("password")):
+                        session["user_id"] = user.id
+                        return make_response(user.to_dict(), 200)
+            return make_response({"error": "user not authorized"}, 403)
+        except Exception as e:
+            return make_response({"error": e}, 400)
 
     def get(self):
         if session.get("user_id"):
@@ -114,21 +114,25 @@ class Profile(Resource):
                 db.session.get(User, session["user_id"]).to_dict(), 200
             )
 
-    def post(self):    
-            try:
-                if session.get("user_id"):
-                    r = request.get_json()
-                    if not UserConcert.query.filter_by(user_id=session.get("user_id"), concert_id=r["concert_id"]).first():
-                        new_concert = UserConcert(**r)
-                        updated_ticket = db.session.get(Venue, r["venue_id"])
-                        updated_ticket.capacity -= 1
-                        db.session.add(new_concert, updated_ticket)
-                        db.session.commit()
-                        return make_response(db.session.get(Concert, r["concert_id"]).to_dict(), 200)
-                    else:
-                        return make_response({"error": "user alread has that concert"}, 400)
-            except Exception as e:
-                return make_response({"error": e}, 400)
+    def post(self):
+        try:
+            if session.get("user_id"):
+                r = request.get_json()
+                if not UserConcert.query.filter_by(
+                    user_id=session.get("user_id"), concert_id=r["concert_id"]
+                ).first():
+                    new_concert = UserConcert(**r)
+                    updated_ticket = db.session.get(Venue, r["venue_id"])
+                    updated_ticket.capacity -= 1
+                    db.session.add(new_concert, updated_ticket)
+                    db.session.commit()
+                    return make_response(
+                        db.session.get(Concert, r["concert_id"]).to_dict(), 200
+                    )
+                else:
+                    return make_response({"error": "user alread has that concert"}, 400)
+        except Exception as e:
+            return make_response({"error": e}, 400)
 
     def patch(self):
         if user := db.session.get(User, session.get("user_id")):
