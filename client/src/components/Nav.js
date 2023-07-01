@@ -34,11 +34,9 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUse
             <Header as="h2" icon="ui inverted ticket alternate" content="FlatTicket" class='ui inverted header'></Header>
           </Link>
         </Menu.Item>
-
       <Menu.Item >
         <h2>The Place To Go For Concert Tickets!</h2>
       </Menu.Item>
-
       <Menu.Item position="right">
         <Dropdown
           selection
