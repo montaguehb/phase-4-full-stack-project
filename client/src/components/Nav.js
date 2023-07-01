@@ -26,24 +26,17 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUse
     },
   ];
   return (
-    <Menu id="nav" className="middle aligned" borderless inline>
+    <Menu id="nav" className="ui inverted middle aligned" borderless inline>
       <Menu.Menu position="left">
 
         <Menu.Item>
           <Link to="/concerts">
-            <Header as="h2" icon="ticket alternate" content="FlatTicket" />
+            <Header as="h2" icon="ui inverted ticket alternate" content="FlatTicket" class='ui inverted header'></Header>
           </Link>
         </Menu.Item>
-
-        
-
-      {/* </Menu.Menu> */}
       <Menu.Item >
         <h2>The Place To Go For Concert Tickets!</h2>
       </Menu.Item>
-
-      
-
       <Menu.Item position="right">
         <Dropdown
           selection
