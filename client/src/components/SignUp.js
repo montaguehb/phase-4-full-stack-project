@@ -49,6 +49,9 @@ const SignUp = ({ user, updateUser, method, edit }) => {
       updateUser(data)
       history.push("/concerts")
     }
+    else if (resp.ok) {
+      alert("Edit Successful");
+    }
     resetForm();
   };
 

@@ -103,7 +103,7 @@ class User(db.Model, SerializerMixin):
     @validates("first_name")
     def validate_first_name(self, _, first_name):
         if not first_name:
-            raise ValueError("User needs a first name") 
+            raise ValueError("User needs a first name")
         elif not re.fullmatch("^[A-Za-z]*$", first_name):
             raise ValueError("User needs a first name, 2-50 characters in length")
         return first_name

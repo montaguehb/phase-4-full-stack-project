@@ -30,6 +30,7 @@ const Profile = ({ sortBy, search, user }) => {
             <SignUp method={"PATCH"} user={user}/>
             <p>Current Username:{user.username}</p>
             <p>Current email:{user.email} </p>
+            
           </div>
         ) : (
           <></>
