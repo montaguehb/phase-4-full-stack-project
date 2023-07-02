@@ -76,7 +76,7 @@ function App() {
         </Route>
 
         <Route path="/concerts/:id">
-          <ConcertPage user={user}/>
+          <ConcertPage user={user} updateUser={updateUser}/>
         </Route>
 
       </Switch>

@@ -83,6 +83,7 @@ class Signup(Resource):
             )
             db.session.add(new_user)
             db.session.commit()
+            session["user_id"] = new_user.id
             return make_response(new_user.to_dict(), 201)
         except Exception as e:
             make_response({"error": e}, 400)
@@ -121,7 +122,8 @@ class Profile(Resource):
                 if not UserConcert.query.filter_by(
                     user_id=session.get("user_id"), concert_id=r["concert_id"]
                 ).first():
-                    new_concert = UserConcert(**r)
+                    new_concert = UserConcert(user_id=session.get("user_id"),
+                                              concert_id=r["concert_id"])
                     updated_ticket = db.session.get(Venue, r["venue_id"])
                     updated_ticket.capacity -= 1
                     db.session.add(new_concert, updated_ticket)
