@@ -47,27 +47,29 @@ when you start pipenv using pipenv shell, it will automatically load the key as 
 ### 🎶**Front End**🎶
 
 * Functional search bar with drop down allows users to find concerts based on different parameters
-
+![search functionality](<search functionality.gif>)
 ---
 <br>
 
 * Full auth with login/logout + persistance in profile data
-
+![create account with persistence](<create account.gif>)
 ---
 <br>
 
 * Full CRUD on user profiles
-
+![delete profile functionality](<delete profile.gif>)
 ---
 <br>
 
 * Each card is populated with information seeded from the database
-
+![a render and its corresponding data in database](<render and corresponding data in database.gif>)
 ---
 <br>
 
 * form validation and errors with Yup
-
+![signup form validation with yup](<yup auth.gif>)
+---
+<br>
 
 ### 🎼**Back End**🎼
 
@@ -76,6 +78,7 @@ when you start pipenv using pipenv shell, it will automatically load the key as 
 * full CRUD on users. 
 
 ---
+<br>
 
 ## 🔊Licensing, Packages and Socials🔊
 
