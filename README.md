@@ -61,7 +61,7 @@ when you start pipenv using pipenv shell, it will automatically load the key as 
 ---
 <br>
 
-* Each card is populated with information seeded from the database and is able to direct users to various routes.
+* Each card is populated with information seeded from the database
 
 ---
 <br>
