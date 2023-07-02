@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { Image, Header, Button, Grid } from "semantic-ui-react";
 
-function ConcertPage({ user, login }) {
+function ConcertPage({ user, updateUser }) {
   const [concert, setConcert] = useState();
   const { id } = useParams();
 
@@ -18,7 +18,7 @@ function ConcertPage({ user, login }) {
     })();
   }, [id]);
 
-  const handleClick = async (user) => {
+  const handleClick = async () => {
     const resp = await fetch("/profile", {
       method: "POST",
       headers: {
@@ -29,6 +29,7 @@ function ConcertPage({ user, login }) {
     if (resp.ok) {
       const data = await resp.json()
       setConcert(data)
+      updateUser({...user, user_concerts: [...user.user_concerts, {concert: data, concert_id: concert.id}]})
     }
     else {
       alert("You already have that ticket")
