@@ -31,7 +31,7 @@ const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUse
 
         <Menu.Item>
           <Link to="/concerts">
-            <Header as="h2" icon="ui inverted ticket alternate" content="FlatTicket" class='ui inverted header'></Header>
+            <Header as="h2" icon="ui inverted ticket alternate" content="FlatTicket" class='ui white text inverted header'></Header>
           </Link>
         </Menu.Item>
       <Menu.Item >
