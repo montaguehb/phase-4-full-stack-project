@@ -1,40 +1,39 @@
 import React from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Field } from "formik-semantic-ui-react";
-import { Button, Container, Grid } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
-const SignUp = ({ user, updateLogin, method, edit }) => {
+const SignUp = ({ user, updateUser, method, edit }) => {
   const history = useHistory();
 
   const signUpSchema = Yup.object().shape({
     username: Yup.string()
-      .required("Please Enter your Username")
-      .min(2, "Invalid username")
-      .max(50, "Invalid username"),
-    // .matches(
-    //   // regex in react required to be b/w opening / and closing /
-    //   /^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$/,
-    //   "Must be between 4 to 32 characters with no combination of _, -, or . in between or at the end."
-    // ),
-
-    password: Yup.string().required("Please Enter your Password"),
-    // .matches(
-    //   /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$/,
-    //   "Must have at least one uppercase letter, lowercase letter, symbol, and number."
-    // ),
-
+      .min(2, "Username cannot be less than 2 characters")
+      .max(20, "Username cannot be greater than 20 characters")
+      .matches(
+        /^[a-zA-Z0-9]*$/,
+        "Username must be only letters and numbers with no spaces"
+      )
+      .required("Please enter a username between 2 and 20 characters"),
+    password: Yup.string()
+      .min(10, "Password must be at least 10 characters long")
+      .matches(/^\S+$/, "Password cannot contain spaces")
+      .matches(/[A-Z]/, "Password must have an uppercase letter")
+      .matches(/[a-z]/, "Password must have a lowercase letter")
+      .matches(/[0-9]/, "Password must contain at least 1 number")
+      .matches(
+        /[^a-zA-Z0-9]/,
+        "Password must have at least one special character"
+      )
+      .required("Please Enter a Password"),
     email: Yup.string().email().required("Please Enter your Email"),
-    // .matches(
-    //   /[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}/,
-    //   "Must be in proper email format."
-    // ),
-
-    name: Yup.string().required("Please Enter your First Name"),
-    // .matches(
-    //   /[A-Z][a-z]*/
-    // ),
+    name: Yup.string()
+      .min(1, "Name must be at least 1 letter")
+      .max(30, "Name cannot be longer than 30 letters")
+      .matches(/^[a-zA-Z]*$/, "Name must be only letters")
+      .required("Please Enter your First Name"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -45,9 +44,10 @@ const SignUp = ({ user, updateLogin, method, edit }) => {
       },
       body: JSON.stringify(values),
     });
-    if (method === "POST") {
-      updateLogin(resp.ok);
-      alert("SignUp Successful!");
+    if (method === "POST" && resp.ok) {
+      const data = await resp.json()
+      updateUser(data)
+      history.push("/concerts")
     }
     resetForm();
   };

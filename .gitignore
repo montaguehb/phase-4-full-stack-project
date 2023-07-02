@@ -3,3 +3,6 @@ app.db
 *.pem
 .cert
 .sourcery.yaml
+*.pyc
+instance
+.env

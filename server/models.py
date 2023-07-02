@@ -5,6 +5,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from config import db, bcrypt
 import re
 
+
 class UserConcert(db.Model, SerializerMixin):
     __tablename__ = "user_concerts"
 
@@ -18,10 +19,11 @@ class UserConcert(db.Model, SerializerMixin):
 
     # serializations
     serialize_rules = ("-user.user_concerts", "-concert.user_concerts")
-    
-        # other methods
+
+    # other methods
     def __repr__(self):
         return f"<UserConcert: {self.id} \nUser: {self.user.id} \n Concert: {self.concert.id}>"
+
 
 class Concert(db.Model, SerializerMixin):
     __tablename__ = "concerts"
@@ -40,10 +42,11 @@ class Concert(db.Model, SerializerMixin):
 
     # serialization
     serialize_rules = ("-users", "-venue.concerts", "-tour.concerts", "-user_concerts")
-    
+
     # other methods
     def __repr__(self):
         return f"<Concert: {self.id}>"
+
 
 class Venue(db.Model, SerializerMixin):
     __tablename__ = "venues"
@@ -51,7 +54,7 @@ class Venue(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
-    location = db.Column(db.VARCHAR, nullable=False)
+    location = db.Column(db.VARCHAR, nullable=False, unique=True)
 
     # relationships
     concerts = db.relationship("Concert", back_populates="venue")
@@ -59,7 +62,6 @@ class Venue(db.Model, SerializerMixin):
     # validations
     @validates("name")
     def validate_name(self, key, name):
-
         if not name:
             raise ValueError("Venue needs a name, 2-20 characters in length")
         return name
@@ -80,54 +82,49 @@ class Venue(db.Model, SerializerMixin):
     def __repr__(self):
         return f"<Venue: {self.id} \n Venue Name: {self.name}>"
 
+
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
-    username = db.Column(db.VARCHAR, nullable=False)
+    username = db.Column(db.VARCHAR, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
-    email = db.Column(db.VARCHAR, nullable=False)
+    email = db.Column(db.VARCHAR, nullable=False, unique=True)
 
     # relationships
     user_concerts = db.relationship("UserConcert", back_populates="user")
     concerts = association_proxy("user_concerts", "concerts")
 
     # serializations
-    # serialize_rules = ("-user_concerts.user", "-concerts")
     serialize_only = ("id", "first_name", "username", "email", "user_concerts")
 
     # validations
-    # @validates("first_name")
-    # def validate_first_name(self, _, first_name):
-    #     first_name_regex = "[A-Z][a-z]*"
-    #     first_name_regex = re.compile(first_name_regex)
+    @validates("first_name")
+    def validate_first_name(self, _, first_name):
+        if not first_name:
+            raise ValueError("User needs a first name") 
+        elif not re.fullmatch("^[A-Za-z]*$", first_name):
+            raise ValueError("User needs a first name, 2-50 characters in length")
+        return first_name
 
-    #     if not first_name or not re.fullmatch(first_name_regex, first_name):
-    #         raise ValueError("User needs a first name, 2-20 characters in length")
-    #     return first_name
+    @validates("username")
+    def validate_username(self, _, username):
+        if not username:
+            raise ValueError("User requires a username")
+        elif not re.match("^[a-zA-Z0-9]*$", username):
+            raise ValueError("User needs a username, 2-20 characters in length")
+        return username
 
-    # @validates("username")
-    # def validate_username(self, _, username):
-    #     username_regex = "^(?=.{4,32}$)(?![.-])(?!.*[.]{2})[a-zA-Z0-9.-]+(?<![.])$"
-    #     username_regex = re.compile(username)
-
-    #     if not username or not re.fullmatch(username_regex, username):
-    #         raise ValueError("User needs a username, 2-20 characters in length")
-    #     return username
-
-    # @validates("email")
-    # def validate_email(self, _, email):
-
-    #     email_regex = "[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}"
-    #     email_regex = re.compile(email)
-    #     if not email or not re.fullmatch(email_regex, email):
-    #         raise ValueError("Email is required")
-    #     return email
+    @validates("email")
+    def validate_email(self, _, email):
+        if not email:
+            raise ValueError("Email is required")
+        elif not re.match("[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}", email):
+            raise ValueError("Email needs to be in a proper format")
+        return email
 
     # other methods
-
-    def __repr__(self):
 
     @hybrid_property
     def password_hash(self):
