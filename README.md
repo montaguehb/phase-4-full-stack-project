@@ -23,6 +23,12 @@ The first step to installing and using our application is to fork and clone the 
     1.  To fix a missing module simply run `pip install <module name>`
 7. Now your back end server is up running, its time to get the front end up and running as well.
 
+### 🎼**Updating The Secret Key**🎼
+By default the secret key is set to a value that works fine for a dev environment, however it's insecure for an actual deployment. To update it to something other than the default you can do the following
+1. run `touch .env`
+2. run `python -c 'import secrets; print(secrets.token_hex())'` this will output a secret key to the terminal that you should copy into the next command
+3. run `echo SECRET_KEY=<your-secret-key> >> .env`
+when you start pipenv using pipenv shell, it will automatically load the key as an environment variable
 ### 🎶**Front End**🎶
 
 * In a new terminal cd into the client folder and run `npm install`
