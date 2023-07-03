@@ -57,8 +57,8 @@ const Profile = ({ sortBy, search, user, updateUser }) => {
         ) : (
           <></>
         )}
-        <Button class="negative ui red button" onClick={deleteUser}>
-          <Icon name="trash alternate outline icon" />
+        <Button class="red ui button" onClick={deleteUser}>
+          <Icon name="black trash alternate outline icon" />
           Delete Account
         </Button>
       </Container>
