@@ -12,7 +12,6 @@ const Profile = ({ sortBy, search, user, updateUser }) => {
   const deleteUser = async () => {
     const resp = await fetch("/profile", { method: "DELETE" });
     if (resp.ok) {
-      alert("Account Deletion Successful!");
       history.push("/concerts");
       updateUser(null);
     } else {
