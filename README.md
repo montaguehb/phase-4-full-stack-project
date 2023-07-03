@@ -7,6 +7,7 @@
 Welcome to FlatTicket. An application allowing users to view a wide variety of music tours as well as buy tickets for those tours and a variety of other exciting features.
 
 ---
+<br>
 
 ## 🎛️Installation and Usage🎛️
 
@@ -29,6 +30,7 @@ By default the secret key is set to a value that works fine for a dev environmen
 2. run `python -c 'import secrets; print(secrets.token_hex())'` this will output a secret key to the terminal that you should copy into the next command
 3. run `echo SECRET_KEY=<your-secret-key> >> .env`
 when you start pipenv using pipenv shell, it will automatically load the key as an environment variable
+
 ### 🎶**Front End**🎶
 
 * In a new terminal cd into the client folder and run `npm install`
@@ -38,18 +40,36 @@ when you start pipenv using pipenv shell, it will automatically load the key as 
   * Please note in the backend, you need to protect your secrect key to protect your user data
 
 ---
+<br>
 
 ## 🎸Notable and important features🎸
 
 ### 🎶**Front End**🎶
 
-* Full auth with login/logout + persistance in profile data
-* Full CRUD on user profiles
-* Each card is populated with information seeded from the database and is able to direct users to various routes.
 * Functional search bar with drop down allows users to find concerts based on different parameters
+![search functionality](<search functionality.gif>)
+---
+<br>
+
+* Full auth with login/logout + persistance in profile data
+![create account with persistence](<create account.gif>)
+---
+<br>
+
+* Full CRUD on user profiles
+![delete profile functionality](<delete profile.gif>)
+---
+<br>
+
+* Each card is populated with information seeded from the database
+![a render and its corresponding data in database](<render and corresponding data in database.gif>)
+---
+<br>
 
 * form validation and errors with Yup
-
+![signup form validation with yup](<yup auth.gif>)
+---
+<br>
 
 ### 🎼**Back End**🎼
 
@@ -58,6 +78,7 @@ when you start pipenv using pipenv shell, it will automatically load the key as 
 * full CRUD on users. 
 
 ---
+<br>
 
 ## 🔊Licensing, Packages and Socials🔊
 
