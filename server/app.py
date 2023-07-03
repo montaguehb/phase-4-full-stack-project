@@ -145,10 +145,57 @@ class Profile(Resource):
             return make_response(user.to_dict(), 200)
 
     def delete(self):
-        if user := db.session.get(User, session.get("user_id")):
-            db.session.delete(user)
-            db.session.commit()
-            return make_response({}, 204)
+        if not session.get("user_id"):
+            return make_response({"error": "Unable to perform action"}, 403)
+        r = request.get_json()
+        if "concert_id" in r:
+            return (
+                self._delete_user_concert(user_concert, r)
+                if (
+                    user_concert := UserConcert.query.filter_by(
+                        user_id=session.get("user_id"), concert_id=r["concert_id"]
+                    ).first()
+                )
+                else make_response(
+                    {"error": "user does not have that concert"}, 400
+                )
+            )
+        user = db.session.get(User, session.get("user_id"))
+        db.session.delete(user)
+        db.session.commit()
+        return make_response({}, 204)
+    
+    def _delete_user_concert(self, user_concert, r):
+        db.session.delete(user_concert)
+        updated_ticket = db.session.get(Venue, r["venue_id"])
+        updated_ticket.capacity += 1
+        db.session.add(updated_ticket)
+        db.session.commit()
+        return make_response({}, 204)
+
+    # TODO Rename this here and in `delete`
+    # def _extracted_from_delete_8(self, user_concert, r):
+    #     db.session.delete(user_concert)
+    #     updated_ticket = db.session.get(Venue, r["venue_id"])
+    #     updated_ticket.capacity += 1
+    #     db.session.add(updated_ticket)
+    #     db.session.commit()
+    #     return make_response({}, 204)
+    
+class UserConcerts(Resource):
+    def delete(self, concertID):
+        if session.get("user_id"):
+            user_concert = UserConcert.query.filter_by(
+                user_id=session.get("user_id"), concert_id=concertID
+            ).first()
+            if user_concert:
+                db.session.delete(user_concert)
+                db.session.commit()
+                return make_response({"message": "Concert Ticket Removed"}, 200)
+            else:
+                return make_response({"error": "User Concert Not Found"}, 404)
+        else:
+            return make_response({"error": "Unauthorized"}, 403)
 
 
 api.add_resource(Concerts, "/concerts")
@@ -170,6 +217,7 @@ api.add_resource(Signup, "/signup")
 api.add_resource(Logout, "/logout")
 
 api.add_resource(Profile, "/profile")
+api.add_resource(UserConcerts, "/profile/concerts/<int:concertID>")
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True, use_debugger=False, use_reloader=False)
