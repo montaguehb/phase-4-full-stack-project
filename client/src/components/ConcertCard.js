@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, Image, Button } from "semantic-ui-react";
-import { useLocation, matchPath } from 'react-router';
+import { useLocation } from 'react-router';
 
 
 function ConcertCard({ concert, onDelete }) {
