@@ -12,6 +12,7 @@ function ConcertPage({ user, updateUser }) {
       if (resp.ok) {
         const data = await resp.json()
         setConcert(data);
+        console.log(data)
       } else {
         console.error("Unable to set concerts");
       }
@@ -24,15 +25,24 @@ function ConcertPage({ user, updateUser }) {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ user_id: user.id, concert_id: id, venue_id: concert.venue_id}),
+      body: JSON.stringify({
+        user_id: user.id,
+        concert_id: id,
+        venue_id: concert.venue_id,
+      }),
     });
     if (resp.ok) {
-      const data = await resp.json()
-      setConcert(data)
-      updateUser({...user, user_concerts: [...user.user_concerts, {concert: data, concert_id: concert.id}]})
-    }
-    else {
-      alert("You already have that ticket")
+      const data = await resp.json();
+      setConcert(data);
+      updateUser({
+        ...user,
+        user_concerts: [
+          ...user.user_concerts,
+          { concert: data, user_id: user.id, concert_id: id },
+        ],
+      });
+    } else {
+      alert("You already have that ticket");
     }
   };
 

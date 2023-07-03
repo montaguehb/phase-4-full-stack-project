@@ -145,10 +145,34 @@ class Profile(Resource):
             return make_response(user.to_dict(), 200)
 
     def delete(self):
-        if user := db.session.get(User, session.get("user_id")):
-            db.session.delete(user)
-            db.session.commit()
-            return make_response({}, 204)
+        if not session.get("user_id"):
+            return make_response({"error": "Unable to perform action"}, 403)
+        r = request.get_json()
+        if "concert_id" in r:
+            return (
+                self._extracted_from_delete_8(user_concert, r)
+                if (
+                    user_concert := UserConcert.query.filter_by(
+                        user_id=session.get("user_id"), concert_id=r["concert_id"]
+                    ).first()
+                )
+                else make_response(
+                    {"error": "user does not have that concert"}, 400
+                )
+            )
+        user = db.session.get(User, session.get("user_id"))
+        db.session.delete(user)
+        db.session.commit()
+        return make_response({}, 204)
+
+    # TODO Rename this here and in `delete`
+    def _extracted_from_delete_8(self, user_concert, r):
+        db.session.delete(user_concert)
+        updated_ticket = db.session.get(Venue, r["venue_id"])
+        updated_ticket.capacity += 1
+        db.session.add(updated_ticket)
+        db.session.commit()
+        return make_response({}, 204)
 
 
 api.add_resource(Concerts, "/concerts")

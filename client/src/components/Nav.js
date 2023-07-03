@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { Input, Menu, Header, Button, Dropdown, Divider } from "semantic-ui-react";
+import { Input, Menu, Header, Button, Dropdown } from "semantic-ui-react";
 import Logout from "./Logout"
 
 const Nav = ({ search, handleSearchChange, sortBy, handleSortBy, user, updateUser}) => {

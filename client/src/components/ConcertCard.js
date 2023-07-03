@@ -1,9 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom/cjs/react-router-dom";
-import { Card, Image } from "semantic-ui-react";
-
+import { Link } from "react-router-dom";
+import { Card, Image, Button } from "semantic-ui-react";
+import { useLocation, matchPath } from 'react-router';
 
 function ConcertCard(concert) {
+  const location = useLocation();
+  const isProfilePath = location.pathname === '/profile';
+
+  const temp_handle_click = () =>{
+    return alert('This button Doesnt Work Right Now :-(')
+  }
+
   return (
     <Link to={`/concerts/${concert.id}`}>
       <Card>
@@ -18,7 +25,13 @@ function ConcertCard(concert) {
             Artist: {concert?.tour?.artist?.name}
           </Card.Description>
         </Card.Content>
-
+        
+        {isProfilePath && (
+          <Card.Content extra>
+            <Button className="red ui button" circular icon='delete' onClick={()=>temp_handle_click()}/>
+            Remove Ticket
+          </Card.Content>
+        )}
       </Card>
     </Link>
   );

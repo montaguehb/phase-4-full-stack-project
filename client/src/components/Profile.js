@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ConcertList from "./ConcertList";
 import SignUp from "./SignUp";
-import { Button, Container, Icon } from "semantic-ui-react";
+import { Button, Container, Icon,Divider } from "semantic-ui-react";
 import { useHistory } from 'react-router-dom';
 
 const Profile = ({ sortBy, search, user, updateUser }) => {
@@ -22,7 +22,7 @@ const Profile = ({ sortBy, search, user, updateUser }) => {
 
   return (
     <div>
-      <Container>
+      <Container textAlign="center">
         <h2 style={{ alignItems: "center" }}>
           Welcome: {user.first_name} to your Concert Page!
         </h2>
@@ -45,7 +45,8 @@ const Profile = ({ sortBy, search, user, updateUser }) => {
           
         </Button>
       </Container>
-      
+      <Divider></Divider>
+      <h2 style={{ textAlign: 'center' }}>Your Concerts</h2>
       {user_concerts.length ? (
         <ConcertList
           concerts={user_concerts.map((concert) => concert.concert)}
