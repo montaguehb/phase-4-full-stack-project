@@ -44,6 +44,7 @@ const SignUp = ({ user, updateUser, method, edit }) => {
       },
       body: JSON.stringify(values),
     });
+    debugger
     if (method === "POST" && resp.ok) {
       const data = await resp.json()
       updateUser(data)
@@ -52,7 +53,11 @@ const SignUp = ({ user, updateUser, method, edit }) => {
     else if (resp.ok) {
       alert("Edit Successful");
     }
-    resetForm();
+    else {
+      const data = await resp.json()
+      alert(data.error)
+      resetForm();
+    }
   };
 
   const handle_form_title = () => {

@@ -114,6 +114,8 @@ class User(db.Model, SerializerMixin):
             raise ValueError("User requires a username")
         elif not re.match("^[a-zA-Z0-9]*$", username):
             raise ValueError("User needs a username, 2-20 characters in length")
+        elif User.query.filter_by(username=username).first():
+            raise ValueError("Username already exists")
         return username
 
     @validates("email")
@@ -122,6 +124,8 @@ class User(db.Model, SerializerMixin):
             raise ValueError("Email is required")
         elif not re.match("[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}", email):
             raise ValueError("Email needs to be in a proper format")
+        elif User.query.filter_by(email=email).first():
+            raise ValueError("Email already exists")
         return email
 
     # other methods

@@ -100,5 +100,3 @@ if __name__ == "__main__":
         make_tours()
         make_venues()
         make_concerts()
-        make_users()
-        make_user_concerts()

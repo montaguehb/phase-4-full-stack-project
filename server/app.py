@@ -86,7 +86,7 @@ class Signup(Resource):
             session["user_id"] = new_user.id
             return make_response(new_user.to_dict(), 201)
         except Exception as e:
-            make_response({"error": e}, 400)
+            return make_response({"error": f'{e}'}, 400)
 
 
 class Tours(Resource):
